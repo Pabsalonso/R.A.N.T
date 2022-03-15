@@ -1,0 +1,14 @@
+export const Verb = Object.freeze({
+  DEL: 'DELETE',
+  GET: 'GET',
+  POST: 'POST',
+  PUT: 'PUT',
+});
+
+export const Tag = Object.freeze({
+  DEL_EXAMPLE: 'DEL_EXAMPLE',
+  GET_CONFIG: 'GET_CONFIG',
+  POST_APP_PARAMS: 'POST_APP_PARAMS',
+  POST_USER_REFRESH_TOKEN: 'POST_USER_REFRESH_TOKEN',
+  PUT_APP_PARAMS_LOGOUT: 'PUT_APP_PARAMS_LOGOUT',
+});

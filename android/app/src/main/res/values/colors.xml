@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<color name="white">#FFF</color>
+<color name="primary">#FFF</color>
+<color name="second">#FFF</color>
+<color name="primary_dark">#FFF</color>
+<color name="primary_text">#333333</color>
+<color name="text_splash">#aca8be</color>
+</resources>

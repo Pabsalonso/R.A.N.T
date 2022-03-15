@@ -1,0 +1,9 @@
+/** USER DATA */
+export const USER_FAILED = 'USER_FAILED';
+export const USER_SUCCESS = 'USER_SUCCESS';
+
+/** UPDATE STATE */
+export const SET_USER_DATA_FROM_LOGIN = 'SET_USER_DATA_FROM_LOGIN';
+export const SET_USER_LOGOUT = 'SET_USER_LOGOUT';
+export const SET_USER_STATE = 'SET_USER_STATE';
+export const SET_USER_TOKENS = 'SET_USER_TOKENS';
