@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, Text, View, FlatList, Image } from 'react-native';
+import { SafeAreaView, Text, View, FlatList, ImageBackground } from 'react-native';
 
 // Base
 import BaseComponent from 'base/BaseComponent';
@@ -9,6 +9,7 @@ import { strings } from 'resources/locales/i18n';
 
 // Styles
 import { homeStyle } from 'modules/home/home.style';
+import { home } from '../../routes/Routing';
 
 class HomeContainer extends BaseComponent {
   render() {
@@ -27,11 +28,16 @@ class HomeContainer extends BaseComponent {
             data={recipes}
             renderItem={({ item }) => (
               <View style={homeStyle.recipeCard}>
-                <Image
-                  style={homeStyle.stretch}
+                <ImageBackground
+                  style={homeStyle.recipeImg}
                   source={{ uri: 'https://reactnative.dev/img/tiny_logo.png' }}
-                />
-                <Text>{item.text}</Text>
+                >
+                  <Text style={homeStyle.recipeName}>{item.text}</Text>
+                </ImageBackground>
+                <View>
+                  <Text>Estrellas</Text>
+                  <Text>Tiempo</Text>
+                </View>
               </View>
             )}
           />

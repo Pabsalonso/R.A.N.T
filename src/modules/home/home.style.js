@@ -1,3 +1,4 @@
+import { Left } from 'native-base';
 import { StyleSheet } from 'react-native';
 
 // Resources
@@ -24,9 +25,16 @@ export const homeStyle = StyleSheet.create({
     width: '100%',
     backgroundColor: 'powderblue',
   },
-  stretch: {
+  recipeImg: {
     width: '100%',
-    height: 200,
-    resizeMode: 'stretch',
+    height: 110,
+    resizeMode: 'cover',
+    justifyContent: 'flex-end',
+    alignItems: 'flex-start',
+  },
+  recipeName: {
+    marginLeft: 10,
+    color: Color.white,
+    fontSize: 25,
   },
 });
