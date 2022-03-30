@@ -9,7 +9,7 @@ import BaseComponent from 'base/BaseComponent';
 
 // Navigation
 import { onBackNative } from 'modules/navigation/NavManager';
-// import NavBarMain from 'modules/navigation/NavBarMain';
+import NavBarMain from 'modules/navigation/NavBarMain';
 
 // Resources
 import { strings } from 'resources/locales/i18n';
@@ -25,7 +25,7 @@ class RouterContainer extends BaseComponent {
     const { accessToken } = this.props;
 
     return (
-      <Router sceneStyle={styles.router} backAndroidHandler={onBackNative} hideNavBar>
+      <Router sceneStyle={styles.router} backAndroidHandler={onBackNative} navBar={NavBarMain}>
         <Modal
           key={Routing.mainModal}
           panHandlers={null} // Disable swipe down on iOS

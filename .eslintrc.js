@@ -30,7 +30,9 @@ module.exports = {
     'react',
   ],
   rules: {
+    'linebreak-style': [0, 'error', 'windows'],
     'arrow-body-style': 'warn',
+    'import/prefer-default-export': 'off',
     'import/no-extraneous-dependencies': 0,
     'import/order': 0,
     'max-len': ['error', { code: 120 }],

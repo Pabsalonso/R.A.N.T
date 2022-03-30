@@ -8,7 +8,7 @@ const height = Style.NAV_BAR_HEIGHT;
 const iconSize = Style.ICON_SIZE;
 export const navBarMainStyle = StyleSheet.create({
   container: {
-    backgroundColor: Color.white,
+    backgroundColor: Color.yellow,
   },
   containerContent: {
     height,
@@ -20,6 +20,7 @@ export const navBarMainStyle = StyleSheet.create({
     alignItems: 'center',
   },
   containerTitle: {
+    color: Color.black,
     flex: 0.6,
     justifyContent: 'center',
     alignItems: 'center',

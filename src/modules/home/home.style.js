@@ -12,7 +12,21 @@ export const homeStyle = StyleSheet.create({
   containerContent: {
     alignItems: 'center',
     justifyContent: 'center',
+    //paddingHorizontal: Style.PADDING,
+  },
+  recipesContainer: {
     paddingTop: Style.PADDING,
-    paddingHorizontal: Style.PADDING,
+    width: '100%',
+    height: '100%',
+  },
+  recipeCard: {
+    flex: 1,
+    width: '100%',
+    backgroundColor: 'powderblue',
+  },
+  stretch: {
+    width: '100%',
+    height: 200,
+    resizeMode: 'stretch',
   },
 });
