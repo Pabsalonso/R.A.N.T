@@ -20,6 +20,7 @@ import * as Routing from 'routes/Routing';
 // Views
 import HomeContainer from 'modules/home/HomeContainer';
 import RecipeContainer from 'modules/RecipeContainer';
+import { Item } from 'native-base';
 
 class RouterContainer extends BaseComponent {
   render() {
@@ -50,8 +51,7 @@ class RouterContainer extends BaseComponent {
                 component={HomeContainer}
               />
               <Scene
-                key={Routing.recipes}
-                title="Receta"
+                key={Routing.recipe}
                 component={RecipeContainer}
               />
 

@@ -6,11 +6,9 @@ import * as Routing from 'routes/Routing';
 import BaseComponent from 'base/BaseComponent';
 
 // Resources
-import { strings } from 'resources/locales/i18n';
 
 // Styles
 import { homeStyle } from 'modules/home/home.style';
-import { home } from '../../routes/Routing';
 
 class HomeContainer extends BaseComponent {
   render() {
@@ -31,20 +29,20 @@ class HomeContainer extends BaseComponent {
             data={recipes}
             renderItem={({ item }) => (
               <View style={homeStyle.recipeCard}>
-                <TouchableOpacity onPress={Routing.openRecipes}>
+                <TouchableOpacity onPress={() => Routing.openRecipes(item)}>
                   <ImageBackground
                     style={homeStyle.recipeImg}
                     source={{ uri: 'https://reactnative.dev/img/tiny_logo.png' }}
                   >
                     <Text style={homeStyle.recipeName}>{item.text}</Text>
                   </ImageBackground>
+                  <View style={homeStyle.recipeCardInfo}>
+                    <Text>Estrellas</Text>
+                    <Text>Tiempo</Text>
+                    <Text>Dificultad</Text>
+                    <Text>Acciones</Text>
+                  </View>
                 </TouchableOpacity>
-                <View style={homeStyle.recipeCardInfo}>
-                  <Text>Estrellas</Text>
-                  <Text>Tiempo</Text>
-                  <Text>Dificultad</Text>
-                  <Text>Acciones</Text>
-                </View>
               </View>
             )}
           />
