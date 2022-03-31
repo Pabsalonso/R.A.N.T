@@ -9,7 +9,7 @@ import BaseComponent from 'base/BaseComponent';
 
 // Navigation
 import { onBackNative } from 'modules/navigation/NavManager';
-import NavBarMain from 'modules/navigation/NavBarMain';
+//import NavBarMain from 'modules/navigation/NavBarMain';
 
 // Resources
 import { strings } from 'resources/locales/i18n';
@@ -19,13 +19,14 @@ import * as Routing from 'routes/Routing';
 
 // Views
 import HomeContainer from 'modules/home/HomeContainer';
+import RecipeContainer from 'modules/RecipeContainer';
 
 class RouterContainer extends BaseComponent {
   render() {
     const { accessToken } = this.props;
 
     return (
-      <Router sceneStyle={styles.router} backAndroidHandler={onBackNative} navBar={NavBarMain}>
+      <Router sceneStyle={styles.router} backAndroidHandler={onBackNative} hideNavBar>
         <Modal
           key={Routing.mainModal}
           panHandlers={null} // Disable swipe down on iOS
@@ -47,6 +48,11 @@ class RouterContainer extends BaseComponent {
                 key={Routing.home}
                 title={strings('title.home')}
                 component={HomeContainer}
+              />
+              <Scene
+                key={Routing.recipes}
+                title="Receta"
+                component={RecipeContainer}
               />
 
               {/** Modal */}

@@ -1,5 +1,6 @@
 import React from 'react';
 import { SafeAreaView, Text, View, FlatList, ImageBackground, TouchableOpacity } from 'react-native';
+import * as Routing from 'routes/Routing';
 
 // Base
 import BaseComponent from 'base/BaseComponent';
@@ -17,6 +18,8 @@ class HomeContainer extends BaseComponent {
       { text: 'prueba', key: '1' },
       { text: 'prueba2', key: '2' },
       { text: 'prueba3', key: '3' },
+      { text: 'prueba4', key: '4' },
+      { text: 'prueba5', key: '5' },
     ];
 
     return (
@@ -28,7 +31,7 @@ class HomeContainer extends BaseComponent {
             data={recipes}
             renderItem={({ item }) => (
               <View style={homeStyle.recipeCard}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={Routing.openRecipes}>
                   <ImageBackground
                     style={homeStyle.recipeImg}
                     source={{ uri: 'https://reactnative.dev/img/tiny_logo.png' }}

@@ -20,6 +20,7 @@ export const mainModal = 'mainModal';
 /** Full Screens */
 /** ************ */
 export const home = 'home';
+export const recipe = 'recipe';
 
 /** ******** */
 /** LightBox */
@@ -32,6 +33,9 @@ export const home = 'home';
 export const openMain = (...params) => route(main, ...params);
 export const openMainLightBox = (...params) => route(mainLightBox, ...params);
 export const openMainModal = (...params) => route(mainModal, ...params);
+
+/** Custom */
+export const openRecipes = (...params) => route(recipe, ...params);
 
 /** ******* */
 /** Methods */
