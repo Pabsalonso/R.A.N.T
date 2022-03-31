@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, Text, View, FlatList, ImageBackground } from 'react-native';
+import { SafeAreaView, Text, View, FlatList, ImageBackground, TouchableOpacity } from 'react-native';
 
 // Base
 import BaseComponent from 'base/BaseComponent';
@@ -28,15 +28,19 @@ class HomeContainer extends BaseComponent {
             data={recipes}
             renderItem={({ item }) => (
               <View style={homeStyle.recipeCard}>
-                <ImageBackground
-                  style={homeStyle.recipeImg}
-                  source={{ uri: 'https://reactnative.dev/img/tiny_logo.png' }}
-                >
-                  <Text style={homeStyle.recipeName}>{item.text}</Text>
-                </ImageBackground>
-                <View>
+                <TouchableOpacity>
+                  <ImageBackground
+                    style={homeStyle.recipeImg}
+                    source={{ uri: 'https://reactnative.dev/img/tiny_logo.png' }}
+                  >
+                    <Text style={homeStyle.recipeName}>{item.text}</Text>
+                  </ImageBackground>
+                </TouchableOpacity>
+                <View style={homeStyle.recipeCardInfo}>
                   <Text>Estrellas</Text>
                   <Text>Tiempo</Text>
+                  <Text>Dificultad</Text>
+                  <Text>Acciones</Text>
                 </View>
               </View>
             )}

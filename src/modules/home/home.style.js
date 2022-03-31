@@ -1,4 +1,4 @@
-import { Left } from 'native-base';
+import { Left, Row } from 'native-base';
 import { StyleSheet } from 'react-native';
 
 // Resources
@@ -36,5 +36,11 @@ export const homeStyle = StyleSheet.create({
     marginLeft: 10,
     color: Color.white,
     fontSize: 25,
+  },
+  recipeCardInfo: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 15,
   },
 });
