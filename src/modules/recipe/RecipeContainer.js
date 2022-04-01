@@ -6,7 +6,7 @@ import BaseComponent from 'base/BaseComponent';
 
 // Styles
 import { recipeStyle } from 'modules/recipe/recipe.style';
-import { FlatList } from 'react-native-gesture-handler';
+import { FlatList, ScrollView } from 'react-native-gesture-handler';
 
 class RecipeContainer extends BaseComponent {
   render() {
@@ -15,7 +15,7 @@ class RecipeContainer extends BaseComponent {
     return (
       <SafeAreaView style={recipeStyle.container}>
 
-        <View style={recipeStyle.containerContent}>
+        <ScrollView style={recipeStyle.containerContent}>
           {/* Titulo de la receta y barra de volver atras */}
           <Text style={[styles.text, styles.recipeTitles]}>{title}</Text>
 
@@ -38,21 +38,22 @@ class RecipeContainer extends BaseComponent {
           <View>
             <Text style={[styles.text, styles.recipeTitles]}>Ingredientes</Text>
           </View>
-          <FlatList
-            data={this.props.ingredients}
-            renderItem={({ item }) => (
-              <View style={styles.text}>
+
+          <View>
+            {this.props.ingredients.map((ingredient, i) => (
+              <View style={styles.text} key={i}>
                 <Text style={styles.bulletPoint}>{'\u29BF' + ' '}</Text>
-                <Text>{item}</Text>
+                <Text>{ingredient}</Text>
               </View>
-            )}
-          />
+            ))}
+          </View>
+
           {/* Preparación */}
           <View>
             <Text style={[styles.text, styles.recipeTitles]}>Preparación</Text>
           </View>
 
-        </View>
+        </ScrollView>
       </SafeAreaView>
     );
   }
