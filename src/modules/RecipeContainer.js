@@ -1,6 +1,5 @@
 import React from 'react';
-import { SafeAreaView, View, Text, Button } from 'react-native';
-import * as Routing from 'routes/Routing';
+import { StyleSheet, SafeAreaView, View, Text } from 'react-native';
 
 // Base
 import BaseComponent from 'base/BaseComponent';
@@ -15,11 +14,17 @@ class RecipeContainer extends BaseComponent {
     return (
       <SafeAreaView style={homeStyle.container}>
         <View style={homeStyle.containerContent}>
-          <Text>{title}</Text>
+          <Text style={styles.welcomePrueba}>{title}</Text>
         </View>
       </SafeAreaView>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  welcomePrueba: {
+    fontFamily: 'SendFlowers-Regular',
+  },
+});
 
 export default RecipeContainer;
