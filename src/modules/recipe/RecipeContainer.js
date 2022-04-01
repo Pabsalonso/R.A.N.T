@@ -17,7 +17,12 @@ class RecipeContainer extends BaseComponent {
 
         <ScrollView style={recipeStyle.containerContent}>
           {/* Titulo de la receta y barra de volver atras */}
-          <Text style={[styles.text, styles.recipeTitles]}>{title}</Text>
+          <ImageBackground
+            style={styles.recipeTitleContainer}
+            source={require('../../resources/assets/images/background-dotted.jpg')}
+          >
+            <Text style={[styles.text, styles.recipeTitles]}>{title}</Text>
+          </ImageBackground>
 
           {/* Imagen de la receta, con imagen de abuela y botón me gusta */}
           <View style={styles.headerView}>
@@ -35,23 +40,29 @@ class RecipeContainer extends BaseComponent {
           {/* Descripción de la receta + autor */}
 
           {/* Ingredientes */}
-          <View>
-            <Text style={[styles.text, styles.recipeTitles]}>Ingredientes</Text>
-          </View>
+          <ImageBackground
+            style={styles.recipeTitleContainer}
+            source={require('../../resources/assets/images/background-dotted.jpg')}
+          >
+            <Text style={[styles.text, styles.recipeTitles]}>Imgredientes</Text>
+          </ImageBackground>
 
           <View>
             {this.props.ingredients.map((ingredient, i) => (
               <View style={styles.text} key={i}>
-                <Text style={styles.bulletPoint}>{'\u29BF' + ' '}</Text>
+                <Text style={styles.bulletPoint}>{'/u29BF' + ' '}</Text>
                 <Text>{ingredient}</Text>
               </View>
             ))}
           </View>
 
           {/* Preparación */}
-          <View>
+          <ImageBackground
+            style={styles.recipeTitleContainer}
+            source={require('../../resources/assets/images/background-dotted.jpg')}
+          >
             <Text style={[styles.text, styles.recipeTitles]}>Preparación</Text>
-          </View>
+          </ImageBackground>
 
         </ScrollView>
       </SafeAreaView>
@@ -67,6 +78,10 @@ const styles = StyleSheet.create({
   recipeTitles: {
     fontFamily: 'SendFlowers-Regular',
     fontSize: 30,
+  },
+  recipeTitleContainer: {
+    width: '100%',
+    justifyContent: 'center',
   },
   headerView: {
     width: '100%',
