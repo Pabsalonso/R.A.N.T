@@ -10,7 +10,6 @@ import { FlatList } from 'react-native-gesture-handler';
 
 class RecipeContainer extends BaseComponent {
   render() {
-    const hola= console.log(this.props.ingredients);
     const title = this.props.text;
 
     return (
@@ -18,7 +17,7 @@ class RecipeContainer extends BaseComponent {
 
         <View style={recipeStyle.containerContent}>
           {/* Titulo de la receta y barra de volver atras */}
-          <Text style={styles.recipeTitles}>{title}</Text>
+          <Text style={[styles.text, styles.recipeTitles]}>{title}</Text>
 
           {/* Imagen de la receta, con imagen de abuela y botón me gusta */}
           <View style={styles.headerView}>
@@ -34,19 +33,25 @@ class RecipeContainer extends BaseComponent {
           {/* Banner de info. i.e stars, tiempo, dificultad */}
 
           {/* Descripción de la receta + autor */}
+
+          {/* Ingredientes */}
           <View>
-            <Text style={styles.recipeTitles}>Ingredientes</Text>
+            <Text style={[styles.text, styles.recipeTitles]}>Ingredientes</Text>
           </View>
           <FlatList
             data={this.props.ingredients}
             renderItem={({ item }) => (
-              <View>
+              <View style={styles.text}>
+                <Text style={styles.bulletPoint}>{'\u29BF' + ' '}</Text>
                 <Text>{item}</Text>
               </View>
             )}
           />
+          {/* Preparación */}
+          <View>
+            <Text style={[styles.text, styles.recipeTitles]}>Preparación</Text>
+          </View>
 
-          {/* Ingredientes */}
         </View>
       </SafeAreaView>
     );
@@ -54,8 +59,11 @@ class RecipeContainer extends BaseComponent {
 }
 
 const styles = StyleSheet.create({
+  text: {
+    flexDirection: 'row',
+    paddingHorizontal: 20,
+  },
   recipeTitles: {
-    paddingLeft: 20,
     fontFamily: 'SendFlowers-Regular',
     fontSize: 30,
   },
@@ -76,6 +84,9 @@ const styles = StyleSheet.create({
     borderRadius: 400,
     borderColor: 'yellow',
     borderWidth: 5,
+  },
+  bulletPoint: {
+    color: 'yellow',
   },
 });
 
