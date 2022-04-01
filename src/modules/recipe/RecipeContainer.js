@@ -6,9 +6,11 @@ import BaseComponent from 'base/BaseComponent';
 
 // Styles
 import { recipeStyle } from 'modules/recipe/recipe.style';
+import { FlatList } from 'react-native-gesture-handler';
 
 class RecipeContainer extends BaseComponent {
   render() {
+    const hola= console.log(this.props.ingredients);
     const title = this.props.text;
 
     return (
@@ -16,7 +18,7 @@ class RecipeContainer extends BaseComponent {
 
         <View style={recipeStyle.containerContent}>
           {/* Titulo de la receta y barra de volver atras */}
-          <Text style={styles.recipeTitle}>{title}</Text>
+          <Text style={styles.recipeTitles}>{title}</Text>
 
           {/* Imagen de la receta, con imagen de abuela y botón me gusta */}
           <View style={styles.headerView}>
@@ -32,6 +34,17 @@ class RecipeContainer extends BaseComponent {
           {/* Banner de info. i.e stars, tiempo, dificultad */}
 
           {/* Descripción de la receta + autor */}
+          <View>
+            <Text style={styles.recipeTitles}>Ingredientes</Text>
+          </View>
+          <FlatList
+            data={this.props.ingredients}
+            renderItem={({ item }) => (
+              <View>
+                <Text>{item}</Text>
+              </View>
+            )}
+          />
 
           {/* Ingredientes */}
         </View>
@@ -41,8 +54,10 @@ class RecipeContainer extends BaseComponent {
 }
 
 const styles = StyleSheet.create({
-  recipeTitle: {
+  recipeTitles: {
+    paddingLeft: 20,
     fontFamily: 'SendFlowers-Regular',
+    fontSize: 30,
   },
   headerView: {
     width: '100%',

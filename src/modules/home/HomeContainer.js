@@ -13,11 +13,11 @@ import { homeStyle } from 'modules/home/home.style';
 class HomeContainer extends BaseComponent {
   render() {
     const recipes = [
-      { text: 'prueba', key: '1' },
-      { text: 'prueba2', key: '2' },
-      { text: 'prueba3', key: '3' },
-      { text: 'prueba4', key: '4' },
-      { text: 'prueba5', key: '5' },
+      { text: 'prueba', key: '1', ingredients: ['Aceite', '6g de papas', 'caldo'] },
+      { text: 'Caldo de papas', key: '2', ingredients: ['Aceite', '6g de papas', 'caldo'] },
+      { text: 'prueba3', key: '3', ingredients: ['Aceite', '6g de papas', 'caldo'] },
+      { text: 'prueba4', key: '4', ingredients: ['Aceite', '6g de papas', 'caldo'] },
+      { text: 'prueba5', key: '5', ingredients: ['Aceite', '6g de papas', 'caldo'] },
     ];
 
     return (
