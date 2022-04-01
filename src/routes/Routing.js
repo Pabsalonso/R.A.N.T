@@ -35,10 +35,7 @@ export const openMainLightBox = (...params) => route(mainLightBox, ...params);
 export const openMainModal = (...params) => route(mainModal, ...params);
 
 /** Custom */
-export const openRecipes = (...params) => {
-  route(recipe, ...params);
-  console.log(...params);
-};
+export const openRecipes = (...params) => route(recipe, ...params);
 
 /** ******* */
 /** Methods */

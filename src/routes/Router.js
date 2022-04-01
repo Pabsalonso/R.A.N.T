@@ -19,7 +19,7 @@ import * as Routing from 'routes/Routing';
 
 // Views
 import HomeContainer from 'modules/home/HomeContainer';
-import RecipeContainer from 'modules/RecipeContainer';
+import RecipeContainer from 'modules/recipe/RecipeContainer';
 import { Item } from 'native-base';
 
 class RouterContainer extends BaseComponent {
