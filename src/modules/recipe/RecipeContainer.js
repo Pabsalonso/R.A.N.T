@@ -6,7 +6,7 @@ import BaseComponent from 'base/BaseComponent';
 
 // Styles
 import { recipeStyle } from 'modules/recipe/recipe.style';
-import { FlatList, ScrollView } from 'react-native-gesture-handler';
+import { ScrollView } from 'react-native-gesture-handler';
 
 class RecipeContainer extends BaseComponent {
   render() {
@@ -50,7 +50,7 @@ class RecipeContainer extends BaseComponent {
           <View>
             {this.props.ingredients.map((ingredient, i) => (
               <View style={styles.text} key={i}>
-                <Text style={styles.bulletPoint}>{'/u29BF' + ' '}</Text>
+                <Text style={styles.bulletPoint}>{'\u29BF' + ' '}</Text>
                 <Text>{ingredient}</Text>
               </View>
             ))}
@@ -63,6 +63,25 @@ class RecipeContainer extends BaseComponent {
           >
             <Text style={[styles.text, styles.recipeTitles]}>Preparación</Text>
           </ImageBackground>
+
+          {this.props.steps.map((step) => (
+            <View key={step.step}>
+              <ImageBackground
+                style={styles.recipeImg}
+                source={{ uri: 'https://reactnative.dev/img/tiny_logo.png' }}
+              />
+              <View style={styles.stepInfoContainer}>
+                <Text style={styles.stepNum}>{step.step}</Text>
+
+                <View style={styles.separator} />
+
+                <View style={styles.stepTextContainer}>
+                  <Text style={styles.stepTitle}>{step.title}</Text>
+                  <Text style={styles.stepText}>{step.text}</Text>
+                </View>
+              </View>
+            </View>
+          ))}
 
         </ScrollView>
       </SafeAreaView>
@@ -82,6 +101,7 @@ const styles = StyleSheet.create({
   recipeTitleContainer: {
     width: '100%',
     justifyContent: 'center',
+    marginVertical: 10,
   },
   headerView: {
     width: '100%',
@@ -98,11 +118,39 @@ const styles = StyleSheet.create({
     width: 90,
     height: 90,
     borderRadius: 400,
-    borderColor: 'yellow',
+    borderColor: 'yellow', //color de prueba
     borderWidth: 5,
   },
   bulletPoint: {
-    color: 'yellow',
+    color: 'yellow', //color de prueba
+  },
+  stepInfoContainer: {
+    paddingVertical: 10,
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  stepNum: {
+    width: '25%',
+    textAlign: 'right',
+    fontWeight: 'bold',
+    fontSize: 25,
+  },
+  separator: {
+    marginHorizontal: 10,
+    borderLeftWidth: 3,
+    borderLeftColor: 'red', //color de prueba
+    height: '80%',
+  },
+  stepTextContainer: {
+    flexShrink: 1,
+  },
+  stepTitle: {
+    fontSize: 15,
+    fontWeight: 'bold',
+  },
+  stepText: {
+    fontSize: 10,
   },
 });
 
