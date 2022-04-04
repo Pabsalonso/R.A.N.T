@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { Lightbox, Modal, Router, Scene, Stack } from 'react-native-router-flux';
+import { Lightbox, Modal, Router, Scene, Stack, Drawer } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { verticalScale } from 'react-native-size-matters';
 
@@ -9,7 +9,7 @@ import BaseComponent from 'base/BaseComponent';
 
 // Navigation
 import { onBackNative } from 'modules/navigation/NavManager';
-//import NavBarMain from 'modules/navigation/NavBarMain';
+import NavBarMain from 'modules/navigation/NavBarMain';
 
 // Resources
 import { strings } from 'resources/locales/i18n';
@@ -33,7 +33,7 @@ class RouterContainer extends BaseComponent {
           panHandlers={null} // Disable swipe down on iOS
           hideNavBar
         >
-          <Lightbox key={Routing.mainLightBox}>
+          <Lightbox key={Routing.mainLightBox} hideNavBar>
             <Stack key={Routing.main}>
 
               {/* Auth */}
@@ -45,15 +45,18 @@ class RouterContainer extends BaseComponent {
 
               {/** Main */}
               {/* Home */}
-              <Scene
-                key={Routing.home}
-                title={strings('title.home')}
-                component={HomeContainer}
-              />
+              <Drawer hideNavBar>
+                <Scene
+                  key={Routing.home}
+                  title={strings('title.home')}
+                  component={HomeContainer}
+                />
+              </Drawer>
               <Scene
                 key={Routing.recipe}
                 component={RecipeContainer}
               />
+              {/* </Drawer> */}
 
               {/** Modal */}
 

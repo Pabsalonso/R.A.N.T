@@ -1,10 +1,10 @@
 import React from 'react';
-import { StyleSheet, SafeAreaView, View, Text, Image, ImageBackground } from 'react-native';
+import { SafeAreaView, View, Text, Image, ImageBackground } from 'react-native';
 
 // Base
 import BaseComponent from 'base/BaseComponent';
 
-// Styles
+// recipeStyle
 import { recipeStyle } from 'modules/recipe/recipe.style';
 import { ScrollView } from 'react-native-gesture-handler';
 
@@ -18,20 +18,20 @@ class RecipeContainer extends BaseComponent {
         <ScrollView style={recipeStyle.containerContent}>
           {/* Titulo de la receta y barra de volver atras */}
           <ImageBackground
-            style={styles.recipeTitleContainer}
+            style={recipeStyle.recipeTitleContainer}
             source={require('../../resources/assets/images/background-dotted.jpg')}
           >
-            <Text style={[styles.text, styles.recipeTitles]}>{title}</Text>
+            <Text style={[recipeStyle.text, recipeStyle.recipeTitles]}>{title}</Text>
           </ImageBackground>
 
           {/* Imagen de la receta, con imagen de abuela y botón me gusta */}
-          <View style={styles.headerView}>
+          <View style={recipeStyle.headerView}>
             <ImageBackground
-              style={styles.recipeImg}
+              style={recipeStyle.recipeImg}
               source={{ uri: 'https://reactnative.dev/img/tiny_logo.png' }}
             />
             <Image
-              style={styles.portraitImg}
+              style={recipeStyle.portraitImg}
               source={{ uri: 'https://reactnative.dev/img/tiny_logo.png' }}
             />
           </View>
@@ -41,16 +41,16 @@ class RecipeContainer extends BaseComponent {
 
           {/* Ingredientes */}
           <ImageBackground
-            style={styles.recipeTitleContainer}
+            style={recipeStyle.recipeTitleContainer}
             source={require('../../resources/assets/images/background-dotted.jpg')}
           >
-            <Text style={[styles.text, styles.recipeTitles]}>Imgredientes</Text>
+            <Text style={[recipeStyle.text, recipeStyle.recipeTitles]}>Imgredientes</Text>
           </ImageBackground>
 
           <View>
             {this.props.ingredients.map((ingredient, i) => (
-              <View style={styles.text} key={i}>
-                <Text style={styles.bulletPoint}>{'\u29BF' + ' '}</Text>
+              <View style={recipeStyle.text} key={i}>
+                <Text style={recipeStyle.bulletPoint}>{'\u29BF' + ' '}</Text>
                 <Text>{ingredient}</Text>
               </View>
             ))}
@@ -58,100 +58,43 @@ class RecipeContainer extends BaseComponent {
 
           {/* Preparación */}
           <ImageBackground
-            style={styles.recipeTitleContainer}
+            style={recipeStyle.recipeTitleContainer}
             source={require('../../resources/assets/images/background-dotted.jpg')}
           >
-            <Text style={[styles.text, styles.recipeTitles]}>Preparación</Text>
+            <Text style={[recipeStyle.text, recipeStyle.recipeTitles]}>Preparación</Text>
           </ImageBackground>
 
           {this.props.steps.map((step) => (
             <View key={step.step}>
               <ImageBackground
-                style={styles.recipeImg}
+                style={recipeStyle.recipeImg}
                 source={{ uri: 'https://reactnative.dev/img/tiny_logo.png' }}
               />
-              <View style={styles.stepInfoContainer}>
-                <Text style={styles.stepNum}>{step.step}</Text>
+              <View style={recipeStyle.stepInfoContainer}>
+                <Text style={recipeStyle.stepNum}>{step.step}</Text>
 
-                <View style={styles.separator} />
+                <View style={recipeStyle.separator} />
 
-                <View style={styles.stepTextContainer}>
-                  <Text style={styles.stepTitle}>{step.title}</Text>
-                  <Text style={styles.stepText}>{step.text}</Text>
+                <View style={recipeStyle.stepTextContainer}>
+                  <Text style={recipeStyle.stepTitle}>{step.title}</Text>
+                  <Text style={recipeStyle.stepText}>{step.text}</Text>
                 </View>
               </View>
             </View>
           ))}
+
+          {/* Compartir y caja de comentarios */}
+          <ImageBackground
+            style={recipeStyle.recipeTitleContainer}
+            source={require('../../resources/assets/images/background-dotted.jpg')}
+          >
+            <Text style={[recipeStyle.text, recipeStyle.recipeTitles]}>Comparte y Opina</Text>
+          </ImageBackground>
 
         </ScrollView>
       </SafeAreaView>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  text: {
-    flexDirection: 'row',
-    paddingHorizontal: 20,
-  },
-  recipeTitles: {
-    fontFamily: 'SendFlowers-Regular',
-    fontSize: 30,
-  },
-  recipeTitleContainer: {
-    width: '100%',
-    justifyContent: 'center',
-    marginVertical: 10,
-  },
-  headerView: {
-    width: '100%',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-  },
-  recipeImg: {
-    width: '100%',
-    height: 160,
-  },
-  portraitImg: {
-    overflow: 'hidden',
-    marginTop: -45,
-    width: 90,
-    height: 90,
-    borderRadius: 400,
-    borderColor: 'yellow', //color de prueba
-    borderWidth: 5,
-  },
-  bulletPoint: {
-    color: 'yellow', //color de prueba
-  },
-  stepInfoContainer: {
-    paddingVertical: 10,
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  stepNum: {
-    width: '25%',
-    textAlign: 'right',
-    fontWeight: 'bold',
-    fontSize: 25,
-  },
-  separator: {
-    marginHorizontal: 10,
-    borderLeftWidth: 3,
-    borderLeftColor: 'red', //color de prueba
-    height: '80%',
-  },
-  stepTextContainer: {
-    flexShrink: 1,
-  },
-  stepTitle: {
-    fontSize: 15,
-    fontWeight: 'bold',
-  },
-  stepText: {
-    fontSize: 10,
-  },
-});
 
 export default RecipeContainer;
