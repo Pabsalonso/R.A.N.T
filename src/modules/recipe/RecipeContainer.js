@@ -10,8 +10,6 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 class RecipeContainer extends BaseComponent {
   render() {
-    const title = this.props.text;
-
     return (
       <SafeAreaView style={recipeStyle.container}>
 
@@ -21,7 +19,7 @@ class RecipeContainer extends BaseComponent {
             style={recipeStyle.recipeTitleContainer}
             source={require('../../resources/assets/images/background-dotted.jpg')}
           >
-            <Text style={[recipeStyle.text, recipeStyle.recipeTitles]}>{title}</Text>
+            <Text style={[recipeStyle.text, recipeStyle.recipeTitles]}>{this.props.title}</Text>
           </ImageBackground>
 
           {/* Imagen de la receta, con imagen de abuela y botón me gusta */}

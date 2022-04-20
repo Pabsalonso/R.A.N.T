@@ -45,11 +45,14 @@ class RouterContainer extends BaseComponent {
 
               {/** Main */}
               {/* Home */}
-              <Drawer hideNavBar>
+              <Drawer hideNavBar
+                // contentComponent={Sidebar}
+              >
                 <Scene
                   key={Routing.home}
                   title={strings('title.home')}
                   component={HomeContainer}
+                  hideNavBar
                 />
               </Drawer>
               <Scene

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { SafeAreaView, Text, View, FlatList, ImageBackground, TouchableOpacity, RefreshControl } from 'react-native';
+import React from 'react';
+import { SafeAreaView, Text, View, FlatList, ImageBackground, TouchableOpacity } from 'react-native';
 import * as Routing from 'routes/Routing';
 
 // Base
@@ -9,20 +9,30 @@ import BaseComponent from 'base/BaseComponent';
 
 // Styles
 import { homeStyle } from 'modules/home/home.style';
+import NavBarHome from '../navigation/NavBarHome';
 
 class HomeContainer extends BaseComponent {
   constructor(props) {
     super(props);
-    this.state = { recipes: [], refreshing: false };
+    this.state = {
+      recipes: [],
+      results: [],
+      refreshing: false };
+    this.handleResults = this.handleResults.bind(this);
+  }
+
+  handleResults(results) {
+    this.setState({ results });
   }
 
   componentDidMount() {
     this.fetchAPIData();
+    // setInterval(this.fetchAPIData, 15000);
   }
 
   fetchAPIData = () => {
     this.setState({ refreshing: true });
-    fetch('http://192.168.1.143:8000/api/recipes')
+    fetch('http://192.168.1.143:8000/recipes')
       .then((response) => response.json())
       .then((responseData) => {
         this.setState({
@@ -36,15 +46,15 @@ class HomeContainer extends BaseComponent {
   render() {
     return (
       <SafeAreaView style={homeStyle.container}>
+        <NavBarHome handleResults={this.handleResults} dataSearch={this.state.recipes} />
         <View style={homeStyle.containerContent}>
-          {/* <Text>{strings('title.home')}</Text> */}
           <FlatList
             refreshing={this.state.refreshing}
             onRefresh={this.fetchAPIData}
             style={homeStyle.recipesContainer}
-            data={this.state.recipes}
+            data={this.state.results}
             renderItem={({ item }) => (
-              <View key={item.key} style={homeStyle.recipeCard}>
+              <View key={item.id} style={homeStyle.recipeCard}>
                 <TouchableOpacity onPress={() => Routing.openRecipes(item)}>
                   <ImageBackground
                     style={homeStyle.recipeImg}

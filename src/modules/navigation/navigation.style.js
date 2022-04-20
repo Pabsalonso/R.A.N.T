@@ -8,7 +8,10 @@ const height = Style.NAV_BAR_HEIGHT;
 const iconSize = Style.ICON_SIZE;
 export const navBarMainStyle = StyleSheet.create({
   container: {
-    backgroundColor: Color.yellow,
+    height: '9%',
+    backgroundColor: '#fcdc00',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   containerContent: {
     height,

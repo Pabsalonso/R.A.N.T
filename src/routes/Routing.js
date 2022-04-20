@@ -1,5 +1,8 @@
 import { Actions } from 'react-native-router-flux';
 
+let searchToggle = 'false';
+export const getSearchToggle = () => (searchToggle);
+export const setSearchToggle = () => { searchToggle = !searchToggle; };
 /** **** */
 /** Auth */
 /** **** */
