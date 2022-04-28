@@ -10,10 +10,6 @@ export default function NavBarHome(props) {
     Routing.drawerOpen();
   }
 
-//   const handleResults = () => {
-//     {handleResults};
-//   }
-
   return (
     <NavBar>
       <NavButton onPress={() => _onPressDrawer()}>
@@ -23,15 +19,16 @@ export default function NavBarHome(props) {
       <NavTitle>
         <Text> Titulo </Text>
       </NavTitle>
-      <NavButton onPress={() => alert('hi')}>
-        <NavButtonText>
-          asdfasdfas
-        </NavButtonText>
+      <NavButton onPress={() => this.searchBar.show()}>
+        <Text>
+          Buscar
+        </Text>
       </NavButton>
       <SearchBar
+        ref={(ref) => this.searchBar = ref}
         data={props.dataSearch}
         handleResults={props.handleResults}
-        showOnLoad
+        clearOnHide
       />
     </NavBar>
   );

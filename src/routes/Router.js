@@ -20,7 +20,10 @@ import * as Routing from 'routes/Routing';
 // Views
 import HomeContainer from 'modules/home/HomeContainer';
 import RecipeContainer from 'modules/recipe/RecipeContainer';
-import { Item } from 'native-base';
+import DrawerContainer from 'modules/drawer/DrawerContainer';
+
+//Auth Containers
+import RegisterContainer from 'modules/auth/register/RegisterContainer';
 
 class RouterContainer extends BaseComponent {
   render() {
@@ -37,29 +40,24 @@ class RouterContainer extends BaseComponent {
             <Stack key={Routing.main}>
 
               {/* Auth */}
-              {/*<Stack key={Routing.authStack} hideNavBar>*/}
-              {/*  <Scene key={Routing.login} component={LoginContainer} hideNavBar />*/}
-              {/*  <Scene key={Routing.register} component={RegisterContainer} hideNavBar />*/}
-              {/*  <Scene key={Routing.rememberPassword} component={RememberPasswordContainer} hideNavBar />*/}
-              {/*</Stack>*/}
+              {/* <Stack key={Routing.authStack} hideNavBar> */}
+                {/*  <Scene key={Routing.login} component={LoginContainer} hideNavBar />*/}
+                {/*  <Scene key={Routing.rememberPassword} component={RememberPasswordContainer} hideNavBar />*/}
+              {/* </Stack> */}
 
-              {/** Main */}
               {/* Home */}
-              <Drawer hideNavBar
-                // contentComponent={Sidebar}
-              >
+              <Drawer key={Routing.drawer} hideNavBar contentComponent={DrawerContainer}>
                 <Scene
                   key={Routing.home}
                   title={strings('title.home')}
                   component={HomeContainer}
-                  hideNavBar
+                  // hideNavBar
                 />
               </Drawer>
-              <Scene
-                key={Routing.recipe}
-                component={RecipeContainer}
-              />
-              {/* </Drawer> */}
+              <Scene key={Routing.recipe} component={RecipeContainer} />
+
+              {/* Auth Scenes */}
+              <Scene key={Routing.register} component={RegisterContainer} />
 
               {/** Modal */}
 

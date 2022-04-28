@@ -1,6 +1,6 @@
 /* eslint max-len: 0 */
 
-import moment from 'moment';
+// import moment from 'moment';
 
 // Utils
 import * as Utils from 'utils/Utils';

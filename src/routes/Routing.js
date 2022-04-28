@@ -8,7 +8,7 @@ export const setSearchToggle = () => { searchToggle = !searchToggle; };
 /** **** */
 // export const authStack = 'authStack';
 // export const login = 'login';
-// export const register = 'register';
+export const register = 'register';
 // export const rememberPassword = 'rememberPassword';
 
 /** **** */
@@ -39,6 +39,10 @@ export const openMainModal = (...params) => route(mainModal, ...params);
 
 /** Custom */
 export const openRecipes = (...params) => route(recipe, ...params);
+export const openRegister = (...params) => {
+  drawerClose();
+  route(register, ...params);
+};
 
 /** ******* */
 /** Methods */
