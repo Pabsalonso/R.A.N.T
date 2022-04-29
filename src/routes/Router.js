@@ -24,6 +24,7 @@ import DrawerContainer from 'modules/drawer/DrawerContainer';
 
 //Auth Containers
 import RegisterContainer from 'modules/auth/register/RegisterContainer';
+import LoginContainer from '../modules/auth/login/LoginContainer';
 
 class RouterContainer extends BaseComponent {
   render() {
@@ -58,6 +59,7 @@ class RouterContainer extends BaseComponent {
 
               {/* Auth Scenes */}
               <Scene key={Routing.register} component={RegisterContainer} />
+              <Scene key={Routing.login} component={LoginContainer} />
 
               {/** Modal */}
 

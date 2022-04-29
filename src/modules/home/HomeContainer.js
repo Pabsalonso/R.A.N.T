@@ -34,13 +34,11 @@ class HomeContainer extends BaseComponent {
 
   fetchAPIData = () => {
     this.setState({ refreshing: true });
-
     getRecipes().then((result) => {
       this.setState({
         recipes: result,
       });
     });
-
     this.setState({ refreshing: false });
   }
 

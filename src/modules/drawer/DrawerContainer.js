@@ -13,7 +13,7 @@ export default function DrawerContainer() {
         <Text>Registrarse</Text>
       </Button>
 
-      <Button>
+      <Button onPress={() => Routing.openLogin()}>
         <Text>Iniciar Sesión</Text>
       </Button>
 

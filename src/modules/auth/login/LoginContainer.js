@@ -4,53 +4,55 @@ import { TextInput } from 'react-native-gesture-handler';
 import * as FormValidator from '../../../utils/validators/FormValidators';
 // import * as Routing from 'routes/Routing';
 import { Alert, ActivityIndicator } from 'react-native';
-import Spinner from 'react-native-loading-spinner-overlay';
+// import Spinner from 'react-native-loading-spinner-overlay';
 
-import { register } from 'services/api/ApiCalls';
+import { login } from 'services/api/ApiCalls';
 
-export default function RegisterContainer() {
-  const [spinner, setSpinner] = React.useState(false);
+export default function LoginContainer() {
+//   const [spinner, setSpinner] = React.useState(false);
   const [email, onChangeEmail] = React.useState('');
   const [password, onChangePassword] = React.useState('');
 
   const onSubmit = () => {
-    setSpinner(true);
+    // setSpinner(true);
     if (!FormValidator.emailValidator(email)
      || !FormValidator.isValidPassword(password)) {
       Alert.alert('Error', 'Email o contraseña no cumple con requisitos');
     } else {
-      register(email, password).then((result) => {
-        if (!result.ok) {
-          Alert.alert('Error', 'Este correo no vale');
-        }
+      login(email, password).then((result) => {
+        // if (!result.ok) {
+        //   Alert.alert('Error', 'Este correo no vale');
+        // }
+        console.log(result.token);
       });
     }
-    setSpinner(false);
+    // setSpinner(false);
   };
 
   return (
     <View>
-      { spinner ? <ActivityIndicator color={"#fff"} /> : null }
       {/* <Spinner
         visible={spinner}
         textContent={'Cargando...'}
       /> */}
-      <Text>
-        Hola
-      </Text>
+
       <TextInput
         placeholder="Email"
         onChangeText={onChangeEmail}
+        keyboardType="visible-password"
       />
 
       <TextInput
         placeholder="Contraseña"
+        keyboardType="visible-password"
         secureTextEntry={true}
         onChangeText={onChangePassword}
       />
 
+      {/** Confirmar contraseña */}
+
       <Button onPress={onSubmit}>
-        <Text>Prueba a registrarte</Text>
+        <Text>Iniciar Sesión</Text>
       </Button>
 
     </View>

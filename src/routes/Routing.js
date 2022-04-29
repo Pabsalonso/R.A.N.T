@@ -7,7 +7,7 @@ export const setSearchToggle = () => { searchToggle = !searchToggle; };
 /** Auth */
 /** **** */
 // export const authStack = 'authStack';
-// export const login = 'login';
+export const login = 'login';
 export const register = 'register';
 // export const rememberPassword = 'rememberPassword';
 
@@ -42,6 +42,10 @@ export const openRecipes = (...params) => route(recipe, ...params);
 export const openRegister = (...params) => {
   drawerClose();
   route(register, ...params);
+};
+export const openLogin = (...params) => {
+  drawerClose();
+  route(login, ...params);
 };
 
 /** ******* */
