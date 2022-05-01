@@ -20,6 +20,7 @@ import * as Routing from 'routes/Routing';
 // Views
 import HomeContainer from 'modules/home/HomeContainer';
 import RecipeContainer from 'modules/recipe/RecipeContainer';
+import CreateRecipeContainer from 'modules/recipe/create/CreateRecipeContainer';
 import DrawerContainer from 'modules/drawer/DrawerContainer';
 
 //Auth Containers
@@ -55,6 +56,7 @@ class RouterContainer extends BaseComponent {
                   // hideNavBar
                 />
               </Drawer>
+              <Scene key={Routing.createNewRecipe} component={CreateRecipeContainer} />
               <Scene key={Routing.recipe} component={RecipeContainer} />
 
               {/* Auth Scenes */}

@@ -24,6 +24,7 @@ export const mainModal = 'mainModal';
 /** ************ */
 export const home = 'home';
 export const recipe = 'recipe';
+export const createNewRecipe = 'createNewRecipe';
 
 /** ******** */
 /** LightBox */
@@ -38,14 +39,19 @@ export const openMainLightBox = (...params) => route(mainLightBox, ...params);
 export const openMainModal = (...params) => route(mainModal, ...params);
 
 /** Custom */
-export const openRecipes = (...params) => route(recipe, ...params);
+export const openRecipes = (...params) => {
+  if (!(currentScene() === recipe)) route(recipe, ...params);
+};
+export const openCreateRecipe = (...params) => {
+  if (!(currentScene() === createNewRecipe)) route(createNewRecipe, ...params);
+};
 export const openRegister = (...params) => {
   drawerClose();
-  route(register, ...params);
+  if (!(currentScene() === register)) route(register, ...params);
 };
 export const openLogin = (...params) => {
   drawerClose();
-  route(login, ...params);
+  if (!(currentScene() === login)) route(login, ...params);
 };
 
 /** ******* */

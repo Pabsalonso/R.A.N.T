@@ -20,6 +20,9 @@ export default function DrawerContainer() {
       <Button>
         <Text>Favoritos</Text>
       </Button>
+      <Button onPress={() => Routing.openCreateRecipe()}>
+        <Text>Nueva Receta</Text>
+      </Button>
       <Button>
         <Text>País de las recetas</Text>
       </Button>

@@ -1,12 +1,12 @@
 import React from 'react';
 import { SafeAreaView, View, Text, Image, ImageBackground } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 
 // Base
 import BaseComponent from 'base/BaseComponent';
 
 // recipeStyle
 import { recipeStyle } from 'modules/recipe/recipe.style';
-import { ScrollView } from 'react-native-gesture-handler';
 
 class RecipeContainer extends BaseComponent {
   render() {

@@ -13,9 +13,6 @@ import { setUserTokens } from '../../../services/user/UserActions';
 import * as UserReducer from '../../../services/user/UserReducer';
 
 class LoginContainer extends BaseComponent {
-//   const [spinner, setSpinner] = React.useState(false);
-//   const [email, onChangeEmail] = React.useState('');
-//   const [password, onChangePassword] = React.useState('');
   constructor(props) {
     super(props);
     this.state = {
@@ -47,6 +44,7 @@ class LoginContainer extends BaseComponent {
    render() {
      return (
        <View>
+         {/* Carga el spinner cuando llame a la api */}
          { this.state.spinner
         && (
         <Spinner
@@ -67,7 +65,7 @@ class LoginContainer extends BaseComponent {
            onChangeText={(result) => this.setState({ password: result })}
          />
 
-         {/** Confirmar contraseña */}
+         {/** Falta Confirmar contraseña */}
 
          <Button onPress={this.onSubmit}>
            <Text>Iniciar Sesión</Text>
