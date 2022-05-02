@@ -32,7 +32,6 @@ class LoginContainer extends BaseComponent {
        login(this.state.email, this.state.password).then((result) => {
          /** Añadir handler del error en caso de no ser correctos, email o psw */
          this.props.setUserTokens(result.token, '');
-         this.setState({ spinner: false });
        });
      }
    };
@@ -72,14 +71,8 @@ class LoginContainer extends BaseComponent {
    }
 }
 
-const mapStateToProps = ({ UserReducer }) => {
-  const { accessToken } = UserReducer;
-  return {
-    accessToken,
-  };
-};
 const mapStateToPropsActions = {
   setUserTokens,
 };
 
-export default connect(mapStateToProps, mapStateToPropsActions)(LoginContainer);
+export default connect(null, mapStateToPropsActions)(LoginContainer);

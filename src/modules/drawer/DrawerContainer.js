@@ -1,8 +1,11 @@
 import { View, Text, Button } from 'native-base';
 import React from 'react';
+import { connect } from 'react-redux';
 import * as Routing from 'routes/Routing';
 
-export default function DrawerContainer() {
+import { showLogoutMessage } from '../../services/user/UserActions';
+
+function DrawerContainer({ accessToken, showLogoutMessage }) {
   return (
     <View>
       <Text>
@@ -26,7 +29,22 @@ export default function DrawerContainer() {
       <Button>
         <Text>País de las recetas</Text>
       </Button>
+      <Button onPress={() => showLogoutMessage()}>
+        <Text>Logout</Text>
+      </Button>
 
     </View>
   );
 }
+
+const mapStateToProps = ({ UserReducer }) => {
+  const { accessToken } = UserReducer;
+  return {
+    accessToken,
+  };
+};
+const mapStateToPropsActions = {
+  showLogoutMessage,
+};
+
+export default connect(mapStateToProps, mapStateToPropsActions)(DrawerContainer);

@@ -29,8 +29,8 @@ export const register = async (email, password) => (
   }).catch((error) => console.log(error)) // to catch the errors if any;
 );
 
-export const login = async (username, password) => (
-  fetch('http://192.168.1.143:8000/api/login_check', {
+export const login = async (username, password) => {
+  const token = await fetch('http://192.168.1.143:8000/api/login_check', {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
@@ -41,5 +41,18 @@ export const login = async (username, password) => (
       password,
     }),
   }).then((response) => response.json())
-    .catch((error) => console.log(error)) // to catch the errors if any;
-);
+    .catch((error) => error); // to catch the errors if any;
+  if (token.code === undefined) {
+    const userData = await fetch('http://192.168.1.143:8000/api/profile', {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token.token}`,
+      },
+    }).then((response) => response.json())
+      .catch((error) => error);
+    return { ...token, ...userData };
+  }
+  return token;
+};

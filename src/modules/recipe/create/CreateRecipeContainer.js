@@ -5,6 +5,7 @@ import * as Routing from 'routes/Routing';
 
 // Base
 import BaseComponent from 'base/BaseComponent';
+import NewRecipeStep1 from './formSteps/NewRecipeStep1Container';
 
 // Resources
 
@@ -34,10 +35,11 @@ class CreateRecipeContainer extends BaseComponent {
   nextStep = () => {
     const { step } = this.state;
     this.setState({ step: step + 1 });
+    console.log(this.state);
   }
 
-  handleChange = (input) => (e) => {
-    this.setState({ [input]: e.target.value });
+  handleChange = (input, value) => {
+    this.setState({ [input]: value });
   }
 
   render() {
@@ -46,16 +48,19 @@ class CreateRecipeContainer extends BaseComponent {
     switch (step) {
       case 1:
         return (
-          <View>
+          <ScrollView>
             <Text>
               {' '}
               Paso
               {' '}
               {step}
             </Text>
-            {/* <Button title="atras" onPress={this.prevStep} /> */}
-            <Button title="siguiente" onPress={this.nextStep} />
-          </View>
+            <NewRecipeStep1
+              nextStep={this.nextStep}
+              handleChange={this.handleChange}
+              values={this.state}
+            />
+          </ScrollView>
 
         );
       case 2:
@@ -67,6 +72,10 @@ class CreateRecipeContainer extends BaseComponent {
               {' '}
               {step}
             </Text>
+            <TextInput
+              placeholder="Descripcion"
+              onChangeText={(input) => this.setState({ input })}
+            />
             <Button title="atras" onPress={this.prevStep} />
             <Button title="siguiente" onPress={this.nextStep} />
           </View>
