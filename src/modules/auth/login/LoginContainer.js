@@ -1,6 +1,7 @@
 import { View, Text, Button } from 'native-base';
 import React from 'react';
 import BaseComponent from 'base/BaseComponent';
+import { connect } from 'react-redux';
 
 import { TextInput } from 'react-native-gesture-handler';
 import * as FormValidator from '../../../utils/validators/FormValidators';
@@ -10,7 +11,6 @@ import Spinner from 'react-native-loading-spinner-overlay';
 
 import { login } from 'services/api/ApiCalls';
 import { setUserTokens } from '../../../services/user/UserActions';
-import * as UserReducer from '../../../services/user/UserReducer';
 
 class LoginContainer extends BaseComponent {
   constructor(props) {
@@ -30,12 +30,8 @@ class LoginContainer extends BaseComponent {
      } else {
        this.setState({ spinner: true });
        login(this.state.email, this.state.password).then((result) => {
-         // if (!result.ok) {
-         //   Alert.alert('Error', 'Este correo no vale');
-         // }
-         //  setUserTokens(result.token, '');
-         console.log(UserReducer.default(this.state.prueba, setUserTokens(result.token, result.token)));
-         console.log(UserReducer.default(this.state.prueba, ''));
+         /** Añadir handler del error en caso de no ser correctos, email o psw */
+         this.props.setUserTokens(result.token, '');
          this.setState({ spinner: false });
        });
      }
@@ -76,4 +72,14 @@ class LoginContainer extends BaseComponent {
    }
 }
 
-export default LoginContainer;
+const mapStateToProps = ({ UserReducer }) => {
+  const { accessToken } = UserReducer;
+  return {
+    accessToken,
+  };
+};
+const mapStateToPropsActions = {
+  setUserTokens,
+};
+
+export default connect(mapStateToProps, mapStateToPropsActions)(LoginContainer);
