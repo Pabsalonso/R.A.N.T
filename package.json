@@ -30,10 +30,12 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@miblanchard/react-native-slider": "^2.1.0",
     "@react-native-community/async-storage": "1.11.0",
     "@react-native-community/cli-platform-android": "7.0.1",
     "@react-native-community/netinfo": "5.9.5",
     "@react-native-community/toolbar-android": "0.1.0-rc.2",
+    "@react-native-picker/picker": "^2.4.1",
     "@react-navigation/native": "^5.7.3",
     "axios": "0.19.2",
     "i18n-js": "3.7.1",

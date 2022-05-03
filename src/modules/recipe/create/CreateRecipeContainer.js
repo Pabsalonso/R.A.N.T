@@ -48,19 +48,15 @@ class CreateRecipeContainer extends BaseComponent {
     switch (step) {
       case 1:
         return (
-          <ScrollView>
-            <Text>
-              {' '}
-              Paso
-              {' '}
-              {step}
-            </Text>
-            <NewRecipeStep1
-              nextStep={this.nextStep}
-              handleChange={this.handleChange}
-              values={this.state}
-            />
-          </ScrollView>
+          <SafeAreaView>
+            <ScrollView>
+              <NewRecipeStep1
+                nextStep={this.nextStep}
+                handleChange={this.handleChange}
+                values={this.state}
+              />
+            </ScrollView>
+          </SafeAreaView>
 
         );
       case 2:
@@ -96,21 +92,9 @@ class CreateRecipeContainer extends BaseComponent {
         return (
           <Text>Exito</Text>
         );
-        // never forget the default case, otherwise VS code would be mad!
       default:
         return (null);
-           // do nothing
     }
-
-    // return (
-    //   <SafeAreaView>
-    //     {/* <ScrollView>
-    //         <TextInput
-    //         placeholder='hola'/>
-
-    //     </ScrollView> */}
-    //   </SafeAreaView>
-    // );
   }
 }
 
