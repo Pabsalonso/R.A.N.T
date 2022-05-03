@@ -5,7 +5,8 @@ import { Slider } from '@miblanchard/react-native-slider';
 import { Picker } from '@react-native-picker/picker';
 
 export default function NewRecipeStep1({ nextStep, handleChange, values }) {
-//   Función que sirve para renderizar un componente encima del slider. Hacer bonito
+  /* Función que sirve para renderizar un componente encima del slider.
+   Hacer bonito y que por cada 60 min muestre 1 hora */
   const aboveThumn = () => (
     <Text>
       {values.prepTime}
@@ -38,16 +39,18 @@ export default function NewRecipeStep1({ nextStep, handleChange, values }) {
       />
       {/* Dificultad de la receta */}
       <View>
-      <Picker
-        selectedValue={values.dificulty}
-        onValueChange={(itemValue) => handleChange('dificulty', itemValue)}
-      >
-        <Picker.Item label="Fácil" value="Fácil" />
-        <Picker.Item label="Medio" value="Medio" />
-        <Picker.Item label="Difícil" value="Difícil" />
-      </Picker>
-        <Text style={{width: '100%', height: 60, position: 'absolute', bottom: 0, left: 0}}>{' '}</Text>
+        <Picker
+          selectedValue={values.dificulty}
+          onValueChange={(itemValue) => handleChange('dificulty', itemValue)}
+        >
+          <Picker.Item label="Fácil" value="Fácil" />
+          <Picker.Item label="Medio" value="Medio" />
+          <Picker.Item label="Difícil" value="Difícil" />
+        </Picker>
+        <Text style={{ width: '100%', height: 60, position: 'absolute', bottom: 0, left: 0 }}>{' '}</Text>
       </View>
+
+      {/* Añadir validators */}
       <Button title="siguiente" onPress={nextStep} />
     </View>
   );

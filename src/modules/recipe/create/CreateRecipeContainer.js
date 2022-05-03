@@ -1,11 +1,12 @@
 import React from 'react';
-import { SafeAreaView, Text, View, FlatList, TouchableOpacity, TextInput, Button } from 'react-native';
+import { SafeAreaView, Text, View, Button } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import * as Routing from 'routes/Routing';
-
 // Base
 import BaseComponent from 'base/BaseComponent';
+// Vistas de los pasos
 import NewRecipeStep1 from './formSteps/NewRecipeStep1Container';
+import NewRecipeStep2 from './formSteps/NewRecipeStep2Container';
+import NewRecipeStep3 from './formSteps/NewRecipeStep3Container';
 
 // Resources
 
@@ -61,32 +62,29 @@ class CreateRecipeContainer extends BaseComponent {
         );
       case 2:
         return (
-          <View>
-            <Text>
-              {' '}
-              Paso
-              {' '}
-              {step}
-            </Text>
-            <TextInput
-              placeholder="Descripcion"
-              onChangeText={(input) => this.setState({ input })}
-            />
-            <Button title="atras" onPress={this.prevStep} />
-            <Button title="siguiente" onPress={this.nextStep} />
-          </View>
+          <SafeAreaView>
+            <ScrollView>
+              <NewRecipeStep2
+                nextStep={this.nextStep}
+                prevStep={this.prevStep}
+                handleChange={this.handleChange}
+                values={this.state}
+              />
+            </ScrollView>
+          </SafeAreaView>
         );
       case 3:
         return (
-          <View>
-            <Text>
-              {' '}
-              Paso
-              {step}
-            </Text>
-            <Button title="atras" onPress={this.prevStep} />
-            <Button title="siguiente" onPress={this.nextStep} />
-          </View>
+          <SafeAreaView>
+            <ScrollView>
+              <NewRecipeStep3
+                nextStep={this.nextStep}
+                prevStep={this.prevStep}
+                handleChange={this.handleChange}
+                values={this.state}
+              />
+            </ScrollView>
+          </SafeAreaView>
         );
       case 4:
         return (

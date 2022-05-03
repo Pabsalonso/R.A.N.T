@@ -10,7 +10,7 @@ import { Alert } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 
 import { login } from 'services/api/ApiCalls';
-import { setUserTokens } from '../../../services/user/UserActions';
+import { setUserTokens, setUserData } from '../../../services/user/UserActions';
 
 class LoginContainer extends BaseComponent {
   constructor(props) {
@@ -32,6 +32,7 @@ class LoginContainer extends BaseComponent {
        login(this.state.email, this.state.password).then((result) => {
          /** Añadir handler del error en caso de no ser correctos, email o psw */
          this.props.setUserTokens(result.token, '');
+         this.props.setUserData(result);
        });
      }
    };
@@ -60,7 +61,7 @@ class LoginContainer extends BaseComponent {
            onChangeText={(result) => this.setState({ password: result })}
          />
 
-         {/** Falta Confirmar contraseña */}
+         {/** Falta campo confirmar contraseña */}
 
          <Button onPress={this.onSubmit}>
            <Text>Iniciar Sesión</Text>
@@ -73,6 +74,7 @@ class LoginContainer extends BaseComponent {
 
 const mapStateToPropsActions = {
   setUserTokens,
+  setUserData,
 };
 
 export default connect(null, mapStateToPropsActions)(LoginContainer);
