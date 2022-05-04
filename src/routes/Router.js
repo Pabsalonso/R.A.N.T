@@ -21,11 +21,13 @@ import * as Routing from 'routes/Routing';
 import HomeContainer from 'modules/home/HomeContainer';
 import RecipeContainer from 'modules/recipe/RecipeContainer';
 import CreateRecipeContainer from 'modules/recipe/create/CreateRecipeContainer';
+import CreateStepContainer from 'modules/recipe/recipeStep/CreateStepContainer';
 import DrawerContainer from 'modules/drawer/DrawerContainer';
 
 //Auth Containers
 import RegisterContainer from 'modules/auth/register/RegisterContainer';
 import LoginContainer from '../modules/auth/login/LoginContainer';
+import UserRecipesContainer from '../modules/recipe/read/UserRecipesContainer';
 
 class RouterContainer extends BaseComponent {
   render() {
@@ -56,7 +58,16 @@ class RouterContainer extends BaseComponent {
                   // hideNavBar
                 />
               </Drawer>
+              <Drawer hideNavBar contentComponent={DrawerContainer}>
+                <Scene
+                  key={Routing.userRecipes}
+                  component={UserRecipesContainer}
+                  // hideNavBar
+                />
+              </Drawer>
+
               <Scene key={Routing.createNewRecipe} component={CreateRecipeContainer} />
+              <Scene key={Routing.createNewRecipeStep} component={CreateStepContainer} />
               <Scene key={Routing.recipe} component={RecipeContainer} />
 
               {/* Auth Scenes */}

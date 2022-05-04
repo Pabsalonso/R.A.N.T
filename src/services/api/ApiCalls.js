@@ -11,6 +11,21 @@ export const getRecipes = async () => (
     .catch((error) => console.log(error)) // to catch the errors if any
 );
 
+export const getUserRecipes = async (userId) => (
+  fetch('http://192.168.1.143:8000/api/user/recipes', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      userId,
+    }),
+  })
+    .then((response) => response.json())
+    .catch((error) => console.log(error))
+);
+
 /** ***  *** ***  */
 /** LLamadas POST */
 /** *** *** ****  */
@@ -56,3 +71,27 @@ export const login = async (username, password) => {
   }
   return token;
 };
+
+export const newRecipe = async (userId, userToken, values) => (
+  fetch('http://192.168.1.143:8000/api/recipe/new', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${userToken}`,
+    },
+    body: JSON.stringify({
+      userId,
+      title: values.title,
+      text: values.text,
+      rating: 0,
+      steps: values.steps,
+      img: values.img,
+      prepTime: values.prepTime,
+      dificulty: values.dificulty,
+      people: values.people,
+      ingredients: values.ingredients,
+    }),
+  }).then((response) => response.json())
+    .catch((error) => error) // to catch the errors if any;
+);

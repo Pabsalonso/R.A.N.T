@@ -5,16 +5,19 @@ import * as Routing from 'routes/Routing';
 
 import { showLogoutMessage } from '../../services/user/UserActions';
 
-function DrawerContainer({ accessToken, showLogoutMessage }) {
+function DrawerContainer({ accessToken, dataUser, showLogoutMessage }) {
   return (
     <View>
       <Text>
         Hola
       </Text>
-
+      {/* Condicionales: comprobar el token para saber si uno está registrado */}
+      { accessToken.length === 0
+      && (
       <Button onPress={() => Routing.openRegister()}>
         <Text>Registrarse</Text>
       </Button>
+      )}
 
       <Button onPress={() => Routing.openLogin()}>
         <Text>Iniciar Sesión</Text>
@@ -25,6 +28,9 @@ function DrawerContainer({ accessToken, showLogoutMessage }) {
       </Button>
       <Button onPress={() => Routing.openCreateRecipe()}>
         <Text>Nueva Receta</Text>
+      </Button>
+      <Button onPress={() => Routing.openUserRecipes()}>
+        <Text>Mis recetas</Text>
       </Button>
       <Button>
         <Text>País de las recetas</Text>
@@ -39,8 +45,10 @@ function DrawerContainer({ accessToken, showLogoutMessage }) {
 
 const mapStateToProps = ({ UserReducer }) => {
   const { accessToken } = UserReducer;
+  const { dataUser } = UserReducer;
   return {
     accessToken,
+    dataUser,
   };
 };
 const mapStateToPropsActions = {

@@ -1,6 +1,7 @@
 import React from 'react';
 import { SafeAreaView, Text, View, Button } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+
 // Base
 import BaseComponent from 'base/BaseComponent';
 // Vistas de los pasos
@@ -21,7 +22,7 @@ class CreateRecipeContainer extends BaseComponent {
       text: '',
       img: '',
       prepTime: 0,
-      dificulty: '',
+      dificulty: 'Fácil',
       people: 0,
       ingredients: [],
       steps: [],
@@ -36,7 +37,6 @@ class CreateRecipeContainer extends BaseComponent {
   nextStep = () => {
     const { step } = this.state;
     this.setState({ step: step + 1 });
-    console.log(this.state);
   }
 
   handleChange = (input, value) => {
@@ -76,19 +76,13 @@ class CreateRecipeContainer extends BaseComponent {
       case 3:
         return (
           <SafeAreaView>
-            <ScrollView>
-              <NewRecipeStep3
-                nextStep={this.nextStep}
-                prevStep={this.prevStep}
-                handleChange={this.handleChange}
-                values={this.state}
-              />
-            </ScrollView>
+            <NewRecipeStep3
+              nextStep={this.nextStep}
+              prevStep={this.prevStep}
+              handleChange={this.handleChange}
+              values={this.state}
+            />
           </SafeAreaView>
-        );
-      case 4:
-        return (
-          <Text>Exito</Text>
         );
       default:
         return (null);
