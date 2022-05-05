@@ -26,7 +26,7 @@ function DrawerContainer({ accessToken, dataUser, showLogoutMessage }) {
       <Button>
         <Text>Favoritos</Text>
       </Button>
-      <Button onPress={() => Routing.openCreateRecipe()}>
+      <Button onPress={() => Routing.openCreateRecipe({ title: 'Nueva receta' })}>
         <Text>Nueva Receta</Text>
       </Button>
       <Button onPress={() => Routing.openUserRecipes()}>
