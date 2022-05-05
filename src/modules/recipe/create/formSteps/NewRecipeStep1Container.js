@@ -1,16 +1,19 @@
+/* eslint-disable global-require */
 /* eslint-disable react/prop-types */
 import React, { useCallback, useState } from 'react';
-import { Button, TextInput, View, Text, Alert, Image } from 'react-native';
+import { Button, TextInput, View, Text, Alert, Image, ImageBackground } from 'react-native';
 import { Slider } from '@miblanchard/react-native-slider';
 import { Picker } from '@react-native-picker/picker';
-
-import * as FormValidator from 'utils/validators/FormValidators';
-import * as ImagePicker from 'react-native-image-picker';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import ImagePickerModal from 'modules/imagePicker/ImagePickerModal';
+import * as ImagePicker from 'react-native-image-picker';
+import * as FormValidator from 'utils/validators/FormValidators';
+import * as Routing from 'routes/Routing';
+
+import { newRecipeStyle } from 'modules/recipe/create/newRecipe.style';
 
 export default function NewRecipeStep1({ nextStep, handleChange, values }) {
   const [visible, setVisible] = useState(false);
-  const [pickerResponse, setPickerResponse] = useState(null);
   const validated = {
     titulo: true,
     text: true,
@@ -23,8 +26,8 @@ export default function NewRecipeStep1({ nextStep, handleChange, values }) {
       mediaType: 'photo',
       includeBase64: true,
     };
-    ImagePicker.launchImageLibrary(options, setPickerResponse).then((response) => {
-      handleChange('img', response?.assets && response.assets[0].base64);
+    ImagePicker.launchImageLibrary(options).then((response) => {
+      handleChange('img', response.assets !== undefined ? response.assets[0].base64 : '');
       setVisible(false);
     }).catch();
   }, []);
@@ -35,20 +38,21 @@ export default function NewRecipeStep1({ nextStep, handleChange, values }) {
       mediaType: 'photo',
       includeBase64: true,
     };
-    ImagePicker.launchCamera(options, setPickerResponse).then((response) => {
-      handleChange('img', response?.assets && response.assets[0].base64);
+    ImagePicker.launchCamera(options).then((response) => {
+      handleChange('img', response.assets !== undefined ? response.assets[0].base64 : '');
       setVisible(false);
     }).catch();
   }, []);
 
   /* Función que sirve para renderizar un componente encima del slider.
    Hacer bonito y que por cada 60 min muestre 1 hora */
-  const aboveThumn = () => (
-    <Text>
-      {values.prepTime}
-      {' '}
-      min
-    </Text>
+  const aboveThumb = () => (
+    <View style={{ flexDirection: 'row' }}>
+      <Text style={newRecipeStyle.aboveThumb}>
+        {values.prepTime}
+      </Text>
+      <Text>min</Text>
+    </View>
   );
 
   const validator = () => {
@@ -63,38 +67,79 @@ export default function NewRecipeStep1({ nextStep, handleChange, values }) {
   };
 
   return (
-    <View>
+    <View style={newRecipeStyle.container}>
       {/* Título */}
-      <TextInput
-        style={validated.text ? null : { backgroundColor: '#ff0000' }}
-        placeholder="Título"
-        value={values.title}
-        onChangeText={(input) => handleChange('title', input)}
-      />
+      <Text style={newRecipeStyle.label}>Título de la receta</Text>
+      <View
+        style={newRecipeStyle.centerView}
+      >
+        <TextInput
+          style={newRecipeStyle.input}
+          placeholder="Título"
+          value={values.title}
+          onChangeText={(input) => handleChange('title', input)}
+        />
+      </View>
 
+      {/* Imagen */}
+      <Text style={newRecipeStyle.label}>Foto de la cabecera y listados</Text>
       <Image
-        source={{ uri: `data:image/png;base64,${values.img}` }}
-        style={{ height: 350, width: '100%' }}
+        source={values.img.length !== 0
+          ? { uri: `data:image/png;base64,${values.img}` }
+          : require('resources/assets/images/emptyImg.png')}
+        style={newRecipeStyle.imgContainer}
       />
+      {/* Botones de añadir/eliminar imagen */}
+      <View style={newRecipeStyle.buttonsContainer}>
+        <View style={values.img.length !== 0
+          ? newRecipeStyle.selectImageButton
+          : newRecipeStyle.selectImageButtonOnly}
+        >
+          <Button
+            title="Seleccionar Imagen"
+            onPress={() => setVisible(true)}
+          />
+        </View>
+        { values.img.length !== 0
+        && (
+        <View style={newRecipeStyle.removeImageButton}>
+          <Button
+            title="Eliminar Imagen"
+            color="#f32013"
+            onPress={() => handleChange('img', '')}
+          />
+        </View>
+        )}
+      </View>
 
-      <Button
-        title="Seleccionar Imagen"
-        onPress={() => setVisible(true)}
-      />
       {/* Descripcion */}
-      <TextInput
-        placeholder="Input de texto"
-        value={values.text}
-        onChangeText={(input) => handleChange('text', input)}
-      />
+      <Text style={newRecipeStyle.label}>Entradilla de la receta</Text>
+      <Text style={newRecipeStyle.subLabel}>(es una información general de la receta aprox. 5 o 6 líneas)</Text>
+      <View style={newRecipeStyle.multilineInput}>
+        <TextInput
+          multiline
+          placeholder="Input de texto"
+          numberOfLines={4}
+          value={values.text}
+          onChangeText={(input) => handleChange('text', input)}
+        />
+      </View>
+
       {/* Tiempo de la receta */}
-      <Slider
-        maximumValue={300}
-        step={10}
-        value={values.prepTime}
-        renderAboveThumbComponent={aboveThumn}
-        onValueChange={(value) => handleChange('prepTime', value[0])}
-      />
+      <Text style={newRecipeStyle.label}>Tiempo aproximado de la receta</Text>
+      <View style={newRecipeStyle.slider}>
+        <Slider
+          maximumValue={300}
+          step={5}
+          value={values.prepTime}
+          renderAboveThumbComponent={aboveThumb}
+          onValueChange={(value) => handleChange('prepTime', value[0])}
+          minimumTrackTintColor="#F0D500"
+          thumbTintColor="#F0D500"
+          trackStyle={newRecipeStyle.sliderTrack}
+          thumbStyle={newRecipeStyle.sliderThumb}
+        />
+      </View>
       {/* Dificultad de la receta */}
       <View>
         <Picker
@@ -108,13 +153,28 @@ export default function NewRecipeStep1({ nextStep, handleChange, values }) {
         <Text style={{ width: '100%', height: 60, position: 'absolute', bottom: 0, left: 0 }}>{' '}</Text>
       </View>
 
-      {/* Añadir validators */}
-      <Button
-        title="siguiente"
-        onPress={() => {
-          if (validator()) { nextStep(); }
-        }}
-      />
+      {/* Footer */}
+      <ImageBackground
+        style={newRecipeStyle.imgBackround}
+        source={require('resources/assets/images/background-table.jpg')}
+      >
+        <TouchableOpacity
+          activeOpacity={0.8}
+          style={newRecipeStyle.continue}
+          onPress={() => { if (validator()) { nextStep(); } }}
+        >
+          <Text style={newRecipeStyle.continueText}>Siguiente</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          activeOpacity={0.8}
+          style={newRecipeStyle.cancelar}
+          onPress={Routing.pop}
+        >
+          <Text style={newRecipeStyle.continueText}>Cancelar</Text>
+        </TouchableOpacity>
+
+      </ImageBackground>
 
       <ImagePickerModal
         isVisible={visible}
