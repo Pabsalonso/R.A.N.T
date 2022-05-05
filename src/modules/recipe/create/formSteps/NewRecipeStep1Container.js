@@ -118,7 +118,7 @@ export default function NewRecipeStep1({ nextStep, handleChange, values }) {
       <View style={newRecipeStyle.multilineInput}>
         <TextInput
           multiline
-          placeholder="Input de texto"
+          placeholder="Descripción corta"
           numberOfLines={4}
           value={values.text}
           onChangeText={(input) => handleChange('text', input)}
@@ -163,7 +163,11 @@ export default function NewRecipeStep1({ nextStep, handleChange, values }) {
           style={newRecipeStyle.continue}
           onPress={() => { if (validator()) { nextStep(); } }}
         >
-          <Text style={newRecipeStyle.continueText}>Siguiente</Text>
+          <Text style={newRecipeStyle.continueText}>
+            {' '}
+            Siguiente
+            {' '}
+          </Text>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -171,7 +175,11 @@ export default function NewRecipeStep1({ nextStep, handleChange, values }) {
           style={newRecipeStyle.cancelar}
           onPress={Routing.pop}
         >
-          <Text style={newRecipeStyle.continueText}>Cancelar</Text>
+          <Text style={newRecipeStyle.continueText}>
+            {' '}
+            Cancelar
+            {' '}
+          </Text>
         </TouchableOpacity>
 
       </ImageBackground>

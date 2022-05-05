@@ -92,8 +92,7 @@ export const newRecipeStyle = StyleSheet.create({
     borderRadius: 20,
   },
   continueText: {
-    height: '110%',
-    marginTop: -10,
+    height: '100%',
     fontFamily: 'SendFlowers-Regular',
     fontSize: 30,
   },
@@ -107,6 +106,7 @@ export const newRecipeStyle = StyleSheet.create({
     borderRadius: 20,
   },
   imgBackround: {
+    marginTop: 20,
     alignItems: 'center',
     justifyContent: 'center',
     height: 200,

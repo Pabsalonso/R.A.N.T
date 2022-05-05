@@ -16,9 +16,9 @@ export const homeStyle = StyleSheet.create({
     //paddingHorizontal: Style.PADDING,
   },
   recipesContainer: {
-    paddingTop: Style.PADDING,
+    // marginTop: Style.PADDING,
     width: '100%',
-    height: '100%',
+    // height: '100%',
   },
   recipeCard: {
     flex: 1,

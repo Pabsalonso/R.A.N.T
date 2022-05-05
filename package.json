@@ -53,6 +53,7 @@
     "react-native-keyboard-aware-scroll-view": "0.9.1",
     "react-native-languages": "3.0.2",
     "react-native-loading-spinner-overlay": "^3.0.0",
+    "react-native-modal": "^13.0.1",
     "react-native-nav": "^2.0.2",
     "react-native-reanimated": "^2.1.0",
     "react-native-restart": "0.0.17",
