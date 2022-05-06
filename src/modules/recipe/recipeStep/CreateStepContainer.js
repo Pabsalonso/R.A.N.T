@@ -1,47 +1,121 @@
+/* eslint-disable global-require */
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react';
-import { Button, SafeAreaView, Text, TextInput } from 'react-native';
-import { View } from 'native-base';
-import { ScrollView } from 'react-native-gesture-handler';
-
+import React, { useCallback, useState } from 'react';
+import { Button, Image, SafeAreaView, Text, TextInput } from 'react-native';
 import * as Routing from 'routes/Routing';
+import { View } from 'native-base';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import ImagePickerModal from '../../imagePicker/ImagePickerModal';
+import * as ImagePicker from 'react-native-image-picker';
+
+import { createStepStyle } from './createStep.style';
 
 export default function CreateStepContainer({ addFunc }) {
+  const [visible, setVisible] = useState(false);
   const [stepTitle, setstepTitle] = useState('');
   const [stepText, setstepText] = useState('');
   const [stepImg, setstepImg] = useState('');
-  //   const [count, setcount] = useState((steps.length > 0) ? steps[steps.length - 1].step + 1 : 1);
 
-  //   const addStep = (name) => {
-  //     steps.push({ title: name, step: count });
-  //     setcount(count + 1);
-  //   };
+  const onImageLibraryPress = useCallback(() => {
+    const options = {
+      selectionLimit: 1,
+      mediaType: 'photo',
+      includeBase64: true,
+    };
+    ImagePicker.launchImageLibrary(options).then((response) => {
+      setstepImg(response.assets !== undefined ? response.assets[0].base64 : '');
+      setVisible(false);
+    }).catch();
+  }, []);
+
+  const onCameraPress = useCallback(() => {
+    const options = {
+      saveToPhotos: false,
+      mediaType: 'photo',
+      includeBase64: true,
+    };
+    ImagePicker.launchCamera(options).then((response) => {
+      setstepImg(response.assets !== undefined ? response.assets[0].base64 : '');
+      setVisible(false);
+    }).catch();
+  }, []);
 
   return (
     <SafeAreaView>
       <ScrollView>
-        <Text>Hola caracola</Text>
-        <TextInput
-          placeholder="Titulo"
-          onChangeText={(text) => setstepTitle(text)}
+
+        {/* Imagen */}
+        <Text style={createStepStyle.label}> Foto del paso </Text>
+        <Image
+          source={stepImg.length !== 0
+            ? { uri: `data:image/png;base64,${stepImg}` }
+            : require('resources/assets/images/emptyImg.png')}
+          style={createStepStyle.imgContainer}
         />
-        <TextInput
-          placeholder="Imagen"
-          onChangeText={(text) => setstepText(text)}
-        />
-        <TextInput
-          placeholder="Texto"
-          onChangeText={(text) => setstepImg(text)}
-        />
-        <Button
-          title="Añadir"
-          onPress={() => {
-            //   console.log(props);
-            // addStep('pruebita');
-            addFunc(stepTitle, stepText, stepImg);
-          }}
-        />
+        {/* Botones de añadir/eliminar imagen */}
+        <View style={createStepStyle.buttonsContainer}>
+          <View style={stepImg.length !== 0
+            ? createStepStyle.selectImageButton
+            : createStepStyle.selectImageButtonOnly}
+          >
+            <Button
+              title="Seleccionar Imagen"
+              onPress={() => setVisible(true)}
+            />
+          </View>
+          { stepImg.length !== 0
+        && (
+          <View style={createStepStyle.removeImageButton}>
+            <Button
+              title="Eliminar Imagen"
+              color="#f32013"
+              onPress={() => setstepImg('')}
+            />
+          </View>
+        )}
+        </View>
+
+        {/* Título del paso */}
+        <Text style={createStepStyle.label}> Título del Paso </Text>
+        <Text style={createStepStyle.subLabel}>(Describe de forma general lo que se está haciendo en este paso)</Text>
+        <View style={createStepStyle.centerView}>
+          <TextInput
+            style={createStepStyle.input}
+            placeholder="Titulo"
+            onChangeText={(text) => setstepTitle(text)}
+          />
+        </View>
+        {/* Descripción del paso */}
+        <Text style={createStepStyle.label}> Descripción detallada </Text>
+        <View style={createStepStyle.multilineInput}>
+          <TextInput
+            placeholder="Texto"
+            onChangeText={(text) => setstepText(text)}
+          />
+        </View>
+
+        {/* Botón de crear. Añadir validators */}
+        <View style={createStepStyle.centerView}>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={createStepStyle.create}
+            onPress={() => addFunc(stepTitle, stepText, stepImg)}
+          >
+            <Text style={createStepStyle.continueText}>
+              {' '}
+              Crear Paso
+              {' '}
+            </Text>
+          </TouchableOpacity>
+        </View>
       </ScrollView>
+
+      <ImagePickerModal
+        isVisible={visible}
+        onClose={() => setVisible(false)}
+        onImageLibraryPress={onImageLibraryPress}
+        onCameraPress={onCameraPress}
+      />
     </SafeAreaView>
   );
 //   }

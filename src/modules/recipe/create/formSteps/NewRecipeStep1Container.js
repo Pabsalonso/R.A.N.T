@@ -10,7 +10,7 @@ import * as ImagePicker from 'react-native-image-picker';
 import * as FormValidator from 'utils/validators/FormValidators';
 import * as Routing from 'routes/Routing';
 
-import { newRecipeStyle } from 'modules/recipe/create/newRecipe.style';
+import { newRecipeStyle, newRecipeStep1 } from 'modules/recipe/create/newRecipe.style';
 
 export default function NewRecipeStep1({ nextStep, handleChange, values }) {
   const [visible, setVisible] = useState(false);
@@ -48,7 +48,7 @@ export default function NewRecipeStep1({ nextStep, handleChange, values }) {
    Hacer bonito y que por cada 60 min muestre 1 hora */
   const aboveThumb = () => (
     <View style={{ flexDirection: 'row' }}>
-      <Text style={newRecipeStyle.aboveThumb}>
+      <Text style={newRecipeStep1.aboveThumb}>
         {values.prepTime}
       </Text>
       <Text>min</Text>
@@ -74,7 +74,7 @@ export default function NewRecipeStep1({ nextStep, handleChange, values }) {
         style={newRecipeStyle.centerView}
       >
         <TextInput
-          style={newRecipeStyle.input}
+          style={newRecipeStep1.input}
           placeholder="Título"
           value={values.title}
           onChangeText={(input) => handleChange('title', input)}
@@ -115,7 +115,7 @@ export default function NewRecipeStep1({ nextStep, handleChange, values }) {
       {/* Descripcion */}
       <Text style={newRecipeStyle.label}>Entradilla de la receta</Text>
       <Text style={newRecipeStyle.subLabel}>(es una información general de la receta aprox. 5 o 6 líneas)</Text>
-      <View style={newRecipeStyle.multilineInput}>
+      <View style={newRecipeStep1.multilineInput}>
         <TextInput
           multiline
           placeholder="Descripción corta"
@@ -127,17 +127,17 @@ export default function NewRecipeStep1({ nextStep, handleChange, values }) {
 
       {/* Tiempo de la receta */}
       <Text style={newRecipeStyle.label}>Tiempo aproximado de la receta</Text>
-      <View style={newRecipeStyle.slider}>
+      <View style={newRecipeStep1.slider}>
         <Slider
-          maximumValue={300}
+          maximumValue={200}
           step={5}
           value={values.prepTime}
           renderAboveThumbComponent={aboveThumb}
           onValueChange={(value) => handleChange('prepTime', value[0])}
           minimumTrackTintColor="#F0D500"
           thumbTintColor="#F0D500"
-          trackStyle={newRecipeStyle.sliderTrack}
-          thumbStyle={newRecipeStyle.sliderThumb}
+          trackStyle={newRecipeStep1.sliderTrack}
+          thumbStyle={newRecipeStep1.sliderThumb}
         />
       </View>
       {/* Dificultad de la receta */}

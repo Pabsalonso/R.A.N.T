@@ -11,8 +11,6 @@ import NewRecipeStep3 from './formSteps/NewRecipeStep3Container';
 
 // Resources
 
-// Styles
-
 class CreateRecipeContainer extends BaseComponent {
   constructor(props) {
     super(props);
@@ -62,20 +60,18 @@ class CreateRecipeContainer extends BaseComponent {
         );
       case 2:
         return (
-          <SafeAreaView>
-            <ScrollView>
-              <NewRecipeStep2
-                nextStep={this.nextStep}
-                prevStep={this.prevStep}
-                handleChange={this.handleChange}
-                values={this.state}
-              />
-            </ScrollView>
+          <SafeAreaView style={{ flex: 1 }}>
+            <NewRecipeStep2
+              nextStep={this.nextStep}
+              prevStep={this.prevStep}
+              handleChange={this.handleChange}
+              values={this.state}
+            />
           </SafeAreaView>
         );
       case 3:
         return (
-          <SafeAreaView>
+          <SafeAreaView style={{ flex: 1 }}>
             <NewRecipeStep3
               nextStep={this.nextStep}
               prevStep={this.prevStep}
