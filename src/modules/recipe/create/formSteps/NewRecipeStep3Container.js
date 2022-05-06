@@ -18,23 +18,31 @@ function NewRecipeStep3({ prevStep, handleChange, values, dataUser, accessToken 
   const [count, setcount] = useState((values.steps.length.length !== undefined) ? values.steps.length + 1 : 1);
 
   const renderItem = ({ item, drag, isActive }) => (
-    <TouchableOpacity
-      onLongPress={drag}
-      disabled={isActive}
-      style={newRecipeStep3.listItem}
-    >
-      <ImageBackground
-        style={newRecipeStep3.listItemBackground}
-        source={item.stepImg.length !== 0
-          ? { uri: `data:image/png;base64,${item.stepImg}` }
-          : require('resources/assets/images/default.jpg')}
+    <View>
+      <TouchableOpacity
+        onLongPress={drag}
+        onPress={() => Routing.openEditRecipeStep({ editStep, stepData: item, title: 'Editar paso' })}
+        disabled={isActive}
+        style={newRecipeStep3.listItem}
       >
-        <View style={newRecipeStep3.pasoInfo}>
-          <Text style={newRecipeStep3.pasoNoText}>{item.stepNo}</Text>
-          <Text style={newRecipeStep3.pasoNoTitle}>{item.stepTitle}</Text>
-        </View>
-      </ImageBackground>
-    </TouchableOpacity>
+        <ImageBackground
+          style={newRecipeStep3.listItemBackground}
+          source={item.stepImg.length !== 0
+            ? { uri: `data:image/png;base64,${item.stepImg}` }
+            : require('resources/assets/images/default.jpg')}
+        >
+          <View style={newRecipeStep3.pasoInfo}>
+            <Text style={newRecipeStep3.pasoNoText}>{item.stepNo}</Text>
+            <Text style={newRecipeStep3.pasoNoTitle}>{item.stepTitle}</Text>
+          </View>
+        </ImageBackground>
+      </TouchableOpacity>
+      {/* <Icon
+        name="add-circle-outline"
+        size={50}
+        onPress={() => Routing.openEditRecipeStep({ editStep, stepData: item, title: 'Editar paso' })}
+      /> */}
+    </View>
   );
 
   const addStep = (name, text, img) => {
@@ -44,8 +52,25 @@ function NewRecipeStep3({ prevStep, handleChange, values, dataUser, accessToken 
     Routing.pop();
   };
 
+  const editStep = (step, name, text, img) => {
+    for (let i = 0; i < values.steps.length; i += 1) {
+      const element = values.steps[i];
+      if (element.stepNo === step) {
+        values.steps[i] = {
+          stepTitle: name,
+          stepText: text,
+          stepImg: img,
+          stepNo: element.stepNo,
+          listIndex: element.listIndex };
+        break;
+      }
+    }
+    setUpdateState(['']);
+    Routing.pop();
+  };
+
   const changeStep = (data) => {
-    for (let i = 0; i < data.length; i + 1) {
+    for (let i = 0; i < data.length; i += 1) {
       const element = data[i];
       element.stepNo = i + 1;
     }
@@ -67,7 +92,14 @@ function NewRecipeStep3({ prevStep, handleChange, values, dataUser, accessToken 
             handleChange('steps', changeStep(data));
           }}
           renderItem={renderItem}
-          ListHeaderComponent={(<Text style={newRecipeStyle.title}>Pasos de preparación</Text>)}
+          ListHeaderComponent={(
+            <View style={newRecipeStep3.centerText}>
+              <Text style={newRecipeStyle.title}>Pasos de preparación</Text>
+              <Text style={newRecipeStep3.instuccionesText}>
+                Arrastra los pasos para ordenar. Pulsa en un paso para editarlo
+              </Text>
+            </View>
+          )}
           ListFooterComponent={(
             <>
               {/* Añadir receta boton */}
@@ -78,12 +110,6 @@ function NewRecipeStep3({ prevStep, handleChange, values, dataUser, accessToken 
                   onPress={() => Routing.openCreateRecipeStep({ addFunc: addStep, title: 'Crear un Paso' })}
                 />
               </View>
-              {/* <TouchableOpacity
-                onPress={}
-                style={{ width: '100%', backgroundColor: 'green' }}
-              >
-                <Text>Pruebita</Text>
-              </TouchableOpacity> */}
               {/* Añadir validators */}
               {/* Footer */}
               <View style={newRecipeStyle.footer}>

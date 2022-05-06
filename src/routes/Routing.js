@@ -27,6 +27,7 @@ export const recipe = 'recipe';
 export const userRecipes = 'userRecipes';
 export const createNewRecipe = 'createNewRecipe';
 export const createNewRecipeStep = 'createNewRecipeStep';
+export const editNewRecipeStep = 'editNewRecipeStep';
 
 /** ******** */
 /** LightBox */
@@ -52,6 +53,9 @@ export const openCreateRecipe = (...params) => {
 };
 export const openCreateRecipeStep = (...params) => {
   if (!(currentScene() === createNewRecipeStep)) route(createNewRecipeStep, ...params);
+};
+export const openEditRecipeStep = (...params) => {
+  if (!(currentScene() === editNewRecipeStep)) route(editNewRecipeStep, ...params);
 };
 export const openRegister = (...params) => {
   drawerClose();

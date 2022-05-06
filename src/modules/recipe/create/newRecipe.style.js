@@ -187,4 +187,14 @@ export const newRecipeStep3 = StyleSheet.create({
     fontFamily: 'SendFlowers-Regular',
     fontSize: 25,
   },
+  centerText: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  instuccionesText: {
+    fontWeight: '700',
+    fontSize: 10,
+    marginBottom: 10,
+    marginHorizontal: '3%',
+  },
 });

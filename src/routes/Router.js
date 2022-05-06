@@ -28,6 +28,7 @@ import DrawerContainer from 'modules/drawer/DrawerContainer';
 import RegisterContainer from 'modules/auth/register/RegisterContainer';
 import LoginContainer from '../modules/auth/login/LoginContainer';
 import UserRecipesContainer from '../modules/recipe/read/UserRecipesContainer';
+import EditStepContainer from '../modules/recipe/recipeStep/EditStepContainer';
 
 class RouterContainer extends BaseComponent {
   render() {
@@ -68,6 +69,7 @@ class RouterContainer extends BaseComponent {
 
               <Scene key={Routing.createNewRecipe} component={CreateRecipeContainer} />
               <Scene key={Routing.createNewRecipeStep} component={CreateStepContainer} />
+              <Scene key={Routing.editNewRecipeStep} component={EditStepContainer} />
               <Scene key={Routing.recipe} component={RecipeContainer} />
 
               {/* Auth Scenes */}
