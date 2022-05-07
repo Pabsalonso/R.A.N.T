@@ -25,9 +25,10 @@ export const mainModal = 'mainModal';
 export const home = 'home';
 export const recipe = 'recipe';
 export const userRecipes = 'userRecipes';
+export const editUserRecipes = 'editUserRecipes';
 export const createNewRecipe = 'createNewRecipe';
 export const createNewRecipeStep = 'createNewRecipeStep';
-export const editNewRecipeStep = 'editNewRecipeStep';
+export const editRecipeStep = 'editRecipeStep';
 
 /** ******** */
 /** LightBox */
@@ -48,6 +49,9 @@ export const openRecipes = (...params) => {
 export const openUserRecipes = (...params) => {
   if (!(currentScene() === userRecipes)) route(userRecipes, ...params);
 };
+export const openEditUserRecipes = (...params) => {
+  if (!(currentScene() === editUserRecipes)) route(editUserRecipes, ...params);
+};
 export const openCreateRecipe = (...params) => {
   if (!(currentScene() === createNewRecipe)) route(createNewRecipe, ...params);
 };
@@ -55,7 +59,7 @@ export const openCreateRecipeStep = (...params) => {
   if (!(currentScene() === createNewRecipeStep)) route(createNewRecipeStep, ...params);
 };
 export const openEditRecipeStep = (...params) => {
-  if (!(currentScene() === editNewRecipeStep)) route(editNewRecipeStep, ...params);
+  if (!(currentScene() === editRecipeStep)) route(editRecipeStep, ...params);
 };
 export const openRegister = (...params) => {
   drawerClose();

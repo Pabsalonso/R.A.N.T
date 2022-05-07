@@ -15,13 +15,12 @@ import { newRecipeStyle, newRecipeStep3 } from '../newRecipe.style';
 
 function NewRecipeStep3({ prevStep, handleChange, values, dataUser, accessToken }) {
   const [updateState, setUpdateState] = useState(values.steps);
-  const [count, setcount] = useState((values.steps.length.length !== undefined) ? values.steps.length + 1 : 1);
+  const [count, setcount] = useState((values.steps.length !== undefined) ? values.steps.length + 1 : 1);
 
   const renderItem = ({ item, drag, isActive }) => (
     <View>
       <TouchableOpacity
         onLongPress={drag}
-        onPress={() => Routing.openEditRecipeStep({ editStep, stepData: item, title: 'Editar paso' })}
         disabled={isActive}
         style={newRecipeStep3.listItem}
       >
@@ -31,22 +30,31 @@ function NewRecipeStep3({ prevStep, handleChange, values, dataUser, accessToken 
             ? { uri: `data:image/png;base64,${item.stepImg}` }
             : require('resources/assets/images/default.jpg')}
         >
+          <Icon
+            name="delete"
+            style={newRecipeStep3.listActionIcon}
+            color="black"
+            size={30}
+            onPress={() => removeStep(item.stepNo - 1)}
+          />
           <View style={newRecipeStep3.pasoInfo}>
             <Text style={newRecipeStep3.pasoNoText}>{item.stepNo}</Text>
-            <Text style={newRecipeStep3.pasoNoTitle}>{item.stepTitle}</Text>
+            <Text style={newRecipeStep3.pasoNoTitle}>{item.title}</Text>
           </View>
+          <Icon
+            name="edit"
+            style={newRecipeStep3.listActionIcon}
+            color="black"
+            size={30}
+            onPress={() => Routing.openEditRecipeStep({ editStep, stepData: item, title: 'Editar paso' })}
+          />
         </ImageBackground>
       </TouchableOpacity>
-      {/* <Icon
-        name="add-circle-outline"
-        size={50}
-        onPress={() => Routing.openEditRecipeStep({ editStep, stepData: item, title: 'Editar paso' })}
-      /> */}
     </View>
   );
 
   const addStep = (name, text, img) => {
-    values.steps.push({ stepTitle: name, stepText: text, stepImg: img, stepNo: count, listIndex: count - 1 });
+    values.steps.push({ title: name, stepText: text, stepImg: img, stepNo: count, listIndex: count - 1 });
     setUpdateState(['']);
     setcount(count + 1);
     Routing.pop();
@@ -57,7 +65,7 @@ function NewRecipeStep3({ prevStep, handleChange, values, dataUser, accessToken 
       const element = values.steps[i];
       if (element.stepNo === step) {
         values.steps[i] = {
-          stepTitle: name,
+          title: name,
           stepText: text,
           stepImg: img,
           stepNo: element.stepNo,
@@ -67,6 +75,16 @@ function NewRecipeStep3({ prevStep, handleChange, values, dataUser, accessToken 
     }
     setUpdateState(['']);
     Routing.pop();
+  };
+
+  const removeStep = (index) => {
+    values.steps.splice(index, 1);
+    for (let i = index; i < values.steps.length; i += 1) {
+      const element = values.steps[i];
+      element.stepNo = i + 1;
+    }
+    setcount(count - 1);
+    handleChange('steps', values.steps);
   };
 
   const changeStep = (data) => {

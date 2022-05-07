@@ -166,11 +166,19 @@ export const newRecipeStep3 = StyleSheet.create({
     marginBottom: 10,
   },
   listItemBackground: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     width: '100%',
     height: '100%',
     marginBottom: 10,
     borderRadius: 50,
     overflow: 'hidden',
+  },
+  listActionIcon: {
+    backgroundColor: 'white',
+    borderRadius: 20,
+    marginHorizontal: '5%',
   },
   pasoInfo: {
     flex: 1,

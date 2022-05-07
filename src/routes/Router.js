@@ -22,13 +22,14 @@ import HomeContainer from 'modules/home/HomeContainer';
 import RecipeContainer from 'modules/recipe/RecipeContainer';
 import CreateRecipeContainer from 'modules/recipe/create/CreateRecipeContainer';
 import CreateStepContainer from 'modules/recipe/recipeStep/CreateStepContainer';
+import EditStepContainer from '../modules/recipe/recipeStep/EditStepContainer';
 import DrawerContainer from 'modules/drawer/DrawerContainer';
+import UserRecipesContainer from '../modules/recipe/read/UserRecipesContainer';
+import EditRecipeContainer from '../modules/recipe/edit/EditRecipeContainer';
 
 //Auth Containers
 import RegisterContainer from 'modules/auth/register/RegisterContainer';
 import LoginContainer from '../modules/auth/login/LoginContainer';
-import UserRecipesContainer from '../modules/recipe/read/UserRecipesContainer';
-import EditStepContainer from '../modules/recipe/recipeStep/EditStepContainer';
 
 class RouterContainer extends BaseComponent {
   render() {
@@ -59,17 +60,11 @@ class RouterContainer extends BaseComponent {
                   // hideNavBar
                 />
               </Drawer>
-              <Drawer hideNavBar contentComponent={DrawerContainer}>
-                <Scene
-                  key={Routing.userRecipes}
-                  component={UserRecipesContainer}
-                  // hideNavBar
-                />
-              </Drawer>
-
+              <Scene key={Routing.userRecipes} component={UserRecipesContainer} />
+              <Scene key={Routing.editUserRecipes} component={EditRecipeContainer} />
               <Scene key={Routing.createNewRecipe} component={CreateRecipeContainer} />
               <Scene key={Routing.createNewRecipeStep} component={CreateStepContainer} />
-              <Scene key={Routing.editNewRecipeStep} component={EditStepContainer} />
+              <Scene key={Routing.editRecipeStep} component={EditStepContainer} />
               <Scene key={Routing.recipe} component={RecipeContainer} />
 
               {/* Auth Scenes */}
@@ -92,7 +87,7 @@ class RouterContainer extends BaseComponent {
 const styles = StyleSheet.create({
   router: {
     flex: 1,
-    backgroundColor: Color.white,
+    backgroundColor: '#F6F4E0',
   },
   labelStyle: {
     fontSize: Style.FONT_SIZE_SMALL,

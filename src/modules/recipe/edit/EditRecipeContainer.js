@@ -5,25 +5,26 @@ import { ScrollView } from 'react-native-gesture-handler';
 // Base
 import BaseComponent from 'base/BaseComponent';
 // Vistas de los pasos
-import NewRecipeStep1 from './formSteps/NewRecipeStep1Container';
-import NewRecipeStep2 from './formSteps/NewRecipeStep2Container';
-import NewRecipeStep3 from './formSteps/NewRecipeStep3Container';
+import NewRecipeStep1 from '../create/formSteps/NewRecipeStep1Container';
+import NewRecipeStep2 from '../create/formSteps/NewRecipeStep2Container';
+import NewRecipeStep3 from '../create/formSteps/NewRecipeStep3Container';
 
 // Resources
 
-class CreateRecipeContainer extends BaseComponent {
+class EditRecipeContainer extends BaseComponent {
   constructor(props) {
     super(props);
     this.state = {
+      id: this.props.id,
       step: 1,
-      title: '',
-      text: '',
-      img: '',
-      prepTime: 0,
-      dificulty: 'Fácil',
-      people: 0,
-      ingredients: [],
-      steps: [],
+      title: this.props.title,
+      text: this.props.text,
+      img: this.props.img,
+      prepTime: this.props.prepTime,
+      dificulty: this.props.dificulty,
+      people: this.props.people,
+      ingredients: this.props.ingredients,
+      steps: this.props.steps,
     };
   }
 
@@ -86,4 +87,4 @@ class CreateRecipeContainer extends BaseComponent {
   }
 }
 
-export default CreateRecipeContainer;
+export default EditRecipeContainer;
