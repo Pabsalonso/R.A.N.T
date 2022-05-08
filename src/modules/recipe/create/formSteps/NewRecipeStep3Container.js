@@ -142,7 +142,7 @@ function NewRecipeStep3({ prevStep, handleChange, values, dataUser, accessToken 
                   >
                     <Text style={newRecipeStyle.continueText}>
                       {' '}
-                      Crear la Receta
+                      {values.id === undefined ? 'Crear la Receta' : 'Editar la Receta' }
                       {' '}
                     </Text>
                   </TouchableOpacity>

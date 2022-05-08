@@ -30,7 +30,7 @@ export const getUserRecipes = async (userId) => (
 /** LLamadas POST */
 /** *** *** ****  */
 
-export const register = async (email, password) => (
+export const register = async (email, password, name, picture) => (
   fetch('http://192.168.1.143:8000/api/register', {
     method: 'POST',
     headers: {
@@ -39,9 +39,11 @@ export const register = async (email, password) => (
     },
     body: JSON.stringify({
       email,
-      password: base64.encode(password), // comprobar que se puede luego desencodear y hacer login con texto plano
+      password,
+      name,
+      picture,
     }),
-  }).catch((error) => console.log(error)) // to catch the errors if any;
+  }).then(() => login(email, password)).catch((error) => (error))
 );
 
 export const login = async (username, password) => {
