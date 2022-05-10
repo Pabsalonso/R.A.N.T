@@ -1,44 +1,70 @@
-import { View, Text, Button } from 'native-base';
+/* eslint-disable react/prop-types */
+import { View, Text } from 'native-base';
 import React from 'react';
+import { Image } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { connect } from 'react-redux';
 import * as Routing from 'routes/Routing';
 
 import { showLogoutMessage } from '../../services/user/UserActions';
+import { drawerStyle } from './drawerContainer.style';
 
 function DrawerContainer({ accessToken, dataUser, showLogoutMessage }) {
   return (
     <View>
-      <Text>
-        Hola
-      </Text>
+
+      <View style={drawerStyle.headerContainer}>
+        <View style={drawerStyle.profileImgContainer}>
+          <Image
+            source={(dataUser !== null) && (dataUser.picture !== null)
+              ? { uri: `data:image/png;base64,${dataUser.picture}` }
+              : require('resources/assets/images/granny-pfp.jpg')}
+            style={drawerStyle.img}
+            // onPress={console.log(dataUser)}
+          />
+        </View>
+
+        <Text style={drawerStyle.subtitle}>{(dataUser === null) ? 'Registrate o inicia sesión' : dataUser.name}</Text>
+
+      </View>
       {/* Condicionales: comprobar el token para saber si uno está registrado */}
       { accessToken.length === 0
-      && (
-      <Button onPress={() => Routing.openRegister()}>
-        <Text>Registrarse</Text>
-      </Button>
-      )}
-
-      <Button onPress={() => Routing.openLogin()}>
-        <Text>Iniciar Sesión</Text>
-      </Button>
-
-      <Button>
-        <Text>Favoritos</Text>
-      </Button>
-      <Button onPress={() => Routing.openCreateRecipe({ title: 'Nueva receta' })}>
-        <Text>Nueva Receta</Text>
-      </Button>
-      <Button onPress={() => Routing.openUserRecipes()}>
-        <Text>Mis recetas</Text>
-      </Button>
-      <Button>
-        <Text>País de las recetas</Text>
-      </Button>
-      <Button onPress={() => showLogoutMessage()}>
-        <Text>Logout</Text>
-      </Button>
-
+        ? (
+          <View style={drawerStyle.containerContent}>
+            <TouchableOpacity style={drawerStyle.accountButtons} onPress={() => Routing.openRegister()}>
+              <Text style={drawerStyle.font}>Registrarse</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={drawerStyle.accountButtons} onPress={() => Routing.openLogin()}>
+              <Text style={drawerStyle.font}>Iniciar Sesión</Text>
+            </TouchableOpacity>
+          </View>
+        ) : (
+          <>
+            <TouchableOpacity style={drawerStyle.drawerOption}>
+              <Icon name="favorite-border" size={25} />
+              <Text style={drawerStyle.font}>Favoritos</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={drawerStyle.drawerOption}
+              onPress={() => Routing.openCreateRecipe({ title: 'Nueva receta' })}
+            >
+              <Icon name="add" size={25} />
+              <Text style={drawerStyle.font}>Nueva Receta</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={drawerStyle.drawerOption}
+              onPress={() => Routing.openUserRecipes({ title: 'Mis recetas' })}
+            >
+              <Icon name="kitchen" size={25} />
+              <Text style={drawerStyle.font}>Mis recetas</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={drawerStyle.drawerOption} onPress={() => showLogoutMessage()}>
+              <Icon name="exit-to-app" size={25} />
+              <Text style={drawerStyle.font}>Logout</Text>
+            </TouchableOpacity>
+          </>
+        )}
     </View>
   );
 }

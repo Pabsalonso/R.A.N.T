@@ -64,7 +64,7 @@ class RegisterContainer extends BaseComponent {
        Alert.alert('Error', 'Email o contraseña no cumple con requisitos');
      } else {
        this.setState({ spinner: true });
-       register(email, password, confirmPassword, profile, name).then((result) => {
+       register(email, password, name, profile).then((result) => {
          if (result.code === 401) {
            Alert.alert('Error', 'El correo ya se encuentra en uso');
            this.setState({ spinner: false });
@@ -127,39 +127,39 @@ class RegisterContainer extends BaseComponent {
          </View>
 
          <View style={registerStyle.containerContent}>
-          <TextInput
-            placeholder="Nombre y apellidos"
-            onChangeText={(result) => this.setState({ name: result })}
-            keyboardType="visible-password"
-            style={registerStyle.input}
-          />
-          <TextInput
-            placeholder="Email"
-            onChangeText={(result) => this.setState({ email: result })}
-            keyboardType="visible-password"
-            style={registerStyle.input}
-          />
-          <TextInput
-            placeholder="Contraseña"
-            secureTextEntry
-            onChangeText={(result) => this.setState({ password: result })}
-            style={registerStyle.input}
-          />
-          <TextInput
-            placeholder="Repetir contraseña"
-            secureTextEntry
-            onChangeText={(result) => this.setState({ confirmPassword: result })}
-            style={registerStyle.input}
-          />
-         {/** Falta Validatorss */}
+           <TextInput
+             placeholder="Nombre y apellidos"
+             onChangeText={(result) => this.setState({ name: result })}
+             keyboardType="visible-password"
+             style={registerStyle.input}
+           />
+           <TextInput
+             placeholder="Email"
+             onChangeText={(result) => this.setState({ email: result })}
+             keyboardType="visible-password"
+             style={registerStyle.input}
+           />
+           <TextInput
+             placeholder="Contraseña"
+             secureTextEntry
+             onChangeText={(result) => this.setState({ password: result })}
+             style={registerStyle.input}
+           />
+           <TextInput
+             placeholder="Repetir contraseña"
+             secureTextEntry
+             onChangeText={(result) => this.setState({ confirmPassword: result })}
+             style={registerStyle.input}
+           />
+           {/** Falta Validatorss */}
 
-            <TouchableOpacity
-               activeOpacity={0.8}
-               style={registerStyle.registerButton}
-               onPress={ () => this.onSubmit(this.state) }
-             >
-               <Text style={registerStyle.registerButtonFont}>{' '}Crear cuenta{' '}</Text>
-             </TouchableOpacity>
+           <TouchableOpacity
+             activeOpacity={0.8}
+             style={registerStyle.registerButton}
+             onPress={() => this.onSubmit(this.state)}
+           >
+             <Text style={registerStyle.registerButtonFont}>{' '}Crear cuenta{' '}</Text>
+           </TouchableOpacity>
          </View>
 
          <ImagePickerModal

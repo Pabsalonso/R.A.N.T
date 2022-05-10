@@ -68,7 +68,7 @@ export const registerStyle = StyleSheet.create({
     padding: 10,
     marginVertical: 10,
   },
-  registerButton:{
+  registerButton: {
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#F0D500',
