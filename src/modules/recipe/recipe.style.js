@@ -40,11 +40,11 @@ export const recipeStyle = StyleSheet.create({
     width: 90,
     height: 90,
     borderRadius: 400,
-    borderColor: 'yellow', //color de prueba
+    borderColor: '#FFCF0B',
     borderWidth: 5,
   },
   bulletPoint: {
-    color: 'yellow', //color de prueba
+    color: '#FFCF0B',
   },
   stepInfoContainer: {
     paddingVertical: 10,
@@ -61,7 +61,7 @@ export const recipeStyle = StyleSheet.create({
   separator: {
     marginHorizontal: 10,
     borderLeftWidth: 3,
-    borderLeftColor: 'red', //color de prueba
+    borderLeftColor: '#FFCF0B',
     height: '80%',
   },
   stepTextContainer: {
@@ -73,5 +73,20 @@ export const recipeStyle = StyleSheet.create({
   },
   stepText: {
     fontSize: 10,
+  },
+  recipeCardInfo: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 15,
+  },
+  iconLabel: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  recipeDescription: {
+    textAlign: 'center',
+    paddingHorizontal: '5%',
   },
 });

@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Lightbox, Modal, Router, Scene, Stack, Drawer } from 'react-native-router-flux';
@@ -9,7 +10,6 @@ import BaseComponent from 'base/BaseComponent';
 
 // Navigation
 import { onBackNative } from 'modules/navigation/NavManager';
-import NavBarMain from 'modules/navigation/NavBarMain';
 
 // Resources
 import { strings } from 'resources/locales/i18n';
@@ -27,9 +27,11 @@ import DrawerContainer from 'modules/drawer/DrawerContainer';
 import UserRecipesContainer from '../modules/recipe/read/UserRecipesContainer';
 import EditRecipeContainer from '../modules/recipe/edit/EditRecipeContainer';
 
-//Auth Containers
+// Auth Containers
 import RegisterContainer from 'modules/auth/register/RegisterContainer';
 import LoginContainer from '../modules/auth/login/LoginContainer';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 class RouterContainer extends BaseComponent {
   render() {
@@ -47,8 +49,8 @@ class RouterContainer extends BaseComponent {
 
               {/* Auth */}
               {/* <Stack key={Routing.authStack} hideNavBar> */}
-                {/*  <Scene key={Routing.login} component={LoginContainer} hideNavBar />*/}
-                {/*  <Scene key={Routing.rememberPassword} component={RememberPasswordContainer} hideNavBar />*/}
+              {/*  <Scene key={Routing.login} component={LoginContainer} hideNavBar /> */}
+              {/*  <Scene key={Routing.rememberPassword} component={RememberPasswordContainer} hideNavBar /> */}
               {/* </Stack> */}
 
               {/* Home */}
@@ -57,19 +59,22 @@ class RouterContainer extends BaseComponent {
                   key={Routing.home}
                   title={strings('title.home')}
                   component={HomeContainer}
-                  // hideNavBar
+                  renderLeftButton={drawerIcon}
+                  titleStyle={styles.titleStyle}
+                  renderRightButton={searchIcon}
+                  navigationBarStyle={styles.navBarColor}
                 />
               </Drawer>
-              <Scene key={Routing.userRecipes} component={UserRecipesContainer} />
-              <Scene key={Routing.editUserRecipes} component={EditRecipeContainer} />
-              <Scene key={Routing.createNewRecipe} component={CreateRecipeContainer} />
-              <Scene key={Routing.createNewRecipeStep} component={CreateStepContainer} />
-              <Scene key={Routing.editRecipeStep} component={EditStepContainer} />
-              <Scene key={Routing.recipe} component={RecipeContainer} />
+              <Scene key={Routing.userRecipes} component={UserRecipesContainer} navigationBarStyle={styles.navBarColor} />
+              <Scene key={Routing.editUserRecipes} component={EditRecipeContainer} navigationBarStyle={styles.navBarColor} />
+              <Scene key={Routing.createNewRecipe} component={CreateRecipeContainer} navigationBarStyle={styles.navBarColor} />
+              <Scene key={Routing.createNewRecipeStep} component={CreateStepContainer} navigationBarStyle={styles.navBarColor} />
+              <Scene key={Routing.editRecipeStep} component={EditStepContainer} navigationBarStyle={styles.navBarColor} />
+              <Scene key={Routing.recipe} component={RecipeContainer} navigationBarStyle={styles.navBarColor} />
 
               {/* Auth Scenes */}
-              <Scene key={Routing.register} component={RegisterContainer} />
-              <Scene key={Routing.login} component={LoginContainer} />
+              <Scene key={Routing.register} component={RegisterContainer} navTransparent/>
+              <Scene key={Routing.login} component={LoginContainer} navTransparent />
 
               {/** Modal */}
 
@@ -105,7 +110,36 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  titleStyle: {
+    flex: 1,
+    textAlign: 'center',
+  },
+  navBarColor: {
+    backgroundColor: '#FFCF0B',
+  },
 });
+
+const drawerIcon = () => (
+  <TouchableOpacity>
+    <Icon
+      name="menu"
+      size={30}
+      style={{ marginLeft: 25 }}
+      onPress={() => Routing.drawerOpen()}
+    />
+  </TouchableOpacity>
+);
+
+const searchIcon = () => (
+  <TouchableOpacity>
+    <Icon
+      name="menu"
+      size={30}
+      style={{ marginRight: 25 }}
+      onPress={() => Routing.drawerOpen()}
+    />
+  </TouchableOpacity>
+);
 
 const mapStateToProps = ({ UserReducer }) => {
   const { accessToken } = UserReducer;

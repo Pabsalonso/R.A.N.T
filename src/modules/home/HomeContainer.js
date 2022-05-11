@@ -89,7 +89,7 @@ class HomeContainer extends BaseComponent {
                       <View style={homeStyle.iconLabel}>
                         <Icon
                           name="local-dining"
-                          size={30}
+                          size={20}
                           color="white"
                           style={{ backgroundColor: this.iconColor(item.dificulty), borderRadius: 50, padding:5 }}
                         />

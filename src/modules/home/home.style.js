@@ -37,6 +37,7 @@ export const homeStyle = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 15,
+    backgroundColor: '#FFFDE0',
   },
   iconLabel: {
     flexDirection: 'row',

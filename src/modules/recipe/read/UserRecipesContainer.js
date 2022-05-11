@@ -83,9 +83,12 @@ class UserRecipesContainer extends BaseComponent {
                           name="local-dining"
                           size={20}
                           color="white"
-                          style={{ backgroundColor: this.iconColor(item.dificulty), borderRadius: 50, padding:5 }}
+                          style={{ backgroundColor: this.iconColor(item.dificulty), borderRadius: 50, padding: 5 }}
                         />
-                        <Text>{` `}{item.dificulty}</Text>
+                        <Text>
+                          {' '}
+                          {item.dificulty}
+                        </Text>
                       </View>
                       <View style={homeStyle.iconLabel}>
                         <Icon name="collections" size={25} onPress={() => Routing.openEditUserRecipes(item)} />

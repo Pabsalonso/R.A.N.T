@@ -7,9 +7,23 @@ import BaseComponent from 'base/BaseComponent';
 
 // recipeStyle
 import { recipeStyle } from 'modules/recipe/recipe.style';
+import { connect } from 'react-redux';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 class RecipeContainer extends BaseComponent {
+  iconColor = (dificulty) => {
+    switch (dificulty) {
+      case 'Fácil':
+        return 'green';
+      case 'Medio':
+        return '#FDB40B';
+      default:
+        return 'red';
+    }
+  }
+
   render() {
+    const recipe = this.props;
     return (
       <SafeAreaView style={recipeStyle.container}>
 
@@ -26,17 +40,46 @@ class RecipeContainer extends BaseComponent {
           <View style={recipeStyle.headerView}>
             <ImageBackground
               style={recipeStyle.recipeImg}
-              source={{ uri: 'https://reactnative.dev/img/tiny_logo.png' }}
+              source={recipe.img !== null && recipe.img.length !== 0
+                ? { uri: `data:image/png;base64,${recipe.img}` }
+                : require('resources/assets/images/background-table.jpg')}
             />
             <Image
               style={recipeStyle.portraitImg}
-              source={{ uri: 'https://reactnative.dev/img/tiny_logo.png' }}
+              source={(recipe.dataUser !== null) && (recipe.dataUser.picture !== null)
+                ? { uri: `data:image/png;base64,${recipe.dataUser.picture}` }
+                : require('resources/assets/images/granny-pfp.jpg')}
             />
           </View>
           {/* Banner de info. i.e stars, tiempo, dificultad */}
+          <View style={recipeStyle.recipeCardInfo}>
+            <Text>Estrellas</Text>
+            <View style={recipeStyle.iconLabel}>
+              <Icon name="alarm" size={30} />
+              <Text>
+                {recipe.prepTime}
+                {' '}
+                min
+              </Text>
+            </View>
+            <View style={recipeStyle.iconLabel}>
+              <Icon
+                name="local-dining"
+                size={20}
+                color="white"
+                style={{ backgroundColor: this.iconColor(recipe.dificulty), borderRadius: 50, padding: 5 }}
+              />
+              <Text>
+                {' '}
+                {recipe.dificulty}
+              </Text>
+            </View>
+          </View>
 
           {/* Descripción de la receta + autor */}
-
+          <Text style={recipeStyle.recipeDescription}>
+            {recipe.text}
+          </Text>
           {/* Ingredientes */}
           <ImageBackground
             style={recipeStyle.recipeTitleContainer}
@@ -63,19 +106,21 @@ class RecipeContainer extends BaseComponent {
           </ImageBackground>
 
           {this.props.steps.map((step) => (
-            <View key={step.step}>
+            <View key={step.stepNo}>
               <ImageBackground
                 style={recipeStyle.recipeImg}
-                source={{ uri: 'https://reactnative.dev/img/tiny_logo.png' }}
+                source={step.stepImg !== null && step.stepImg.length !== 0
+                  ? { uri: `data:image/png;base64,${step.stepImg}` }
+                  : require('resources/assets/images/background-table.jpg')}
               />
               <View style={recipeStyle.stepInfoContainer}>
-                <Text style={recipeStyle.stepNum}>{step.step}</Text>
+                <Text style={recipeStyle.stepNum}>{step.stepNo}</Text>
 
                 <View style={recipeStyle.separator} />
 
                 <View style={recipeStyle.stepTextContainer}>
                   <Text style={recipeStyle.stepTitle}>{step.title}</Text>
-                  <Text style={recipeStyle.stepText}>{step.text}</Text>
+                  <Text style={recipeStyle.stepText}>{step.stepText}</Text>
                 </View>
               </View>
             </View>
@@ -95,4 +140,11 @@ class RecipeContainer extends BaseComponent {
   }
 }
 
-export default RecipeContainer;
+const mapStateToProps = ({ UserReducer }) => {
+  const { dataUser } = UserReducer;
+  return {
+    dataUser,
+  };
+};
+
+export default connect(mapStateToProps)(RecipeContainer);
