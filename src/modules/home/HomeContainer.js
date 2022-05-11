@@ -1,17 +1,18 @@
 import React from 'react';
 import { SafeAreaView, Text, View, FlatList, ImageBackground, TouchableOpacity } from 'react-native';
 import * as Routing from 'routes/Routing';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { getRecipes } from 'services/api/ApiCalls';
+import { connect } from 'react-redux';
 
 // Base
 import BaseComponent from 'base/BaseComponent';
-
+// import NavBarHome from '../navigation/NavBarHome';
 // Resources
 
 // Styles
 import { homeStyle } from 'modules/home/home.style';
-import NavBarHome from '../navigation/NavBarHome';
 
 class HomeContainer extends BaseComponent {
   constructor(props) {
@@ -42,6 +43,17 @@ class HomeContainer extends BaseComponent {
     this.setState({ refreshing: false });
   }
 
+  iconColor = (dificulty) => {
+    switch (dificulty) {
+      case 'Fácil':
+        return 'green';
+      case 'Medio':
+        return '#FDB40B';
+      default:
+        return 'red';
+    }
+  }
+
   render() {
     return (
       <SafeAreaView style={homeStyle.container}>
@@ -58,15 +70,32 @@ class HomeContainer extends BaseComponent {
                   <TouchableOpacity onPress={() => Routing.openRecipes(item)}>
                     <ImageBackground
                       style={homeStyle.recipeImg}
-                      source={{ uri: 'https://reactnative.dev/img/tiny_logo.png' }}
+                      source={item.img !== null && item.img.length !== 0
+                        ? { uri: `data:image/png;base64,${item.img}` }
+                        : require('resources/assets/images/background-table.jpg')}
                     >
                       <Text style={homeStyle.recipeName}>{item.title}</Text>
                     </ImageBackground>
                     <View style={homeStyle.recipeCardInfo}>
                       <Text>Estrellas</Text>
-                      <Text>Tiempo</Text>
-                      <Text>Dificultad</Text>
-                      <Text>Acciones</Text>
+                      <View style={homeStyle.iconLabel}>
+                        <Icon name="alarm" size={30} />
+                        <Text>
+                          {item.prepTime}
+                          {' '}
+                          min
+                        </Text>
+                      </View>
+                      <View style={homeStyle.iconLabel}>
+                        <Icon
+                          name="local-dining"
+                          size={30}
+                          color="white"
+                          style={{ backgroundColor: this.iconColor(item.dificulty), borderRadius: 50, padding:5 }}
+                        />
+                        <Text>{` `}{item.dificulty}</Text>
+                      </View>
+                      {/* <Text>Acciones</Text> */}
                     </View>
                   </TouchableOpacity>
                 </View>
@@ -79,4 +108,11 @@ class HomeContainer extends BaseComponent {
   }
 }
 
-export default HomeContainer;
+const mapStateToProps = ({ UserReducer }) => {
+  const { accessToken } = UserReducer;
+  return {
+    accessToken,
+  };
+};
+
+export default connect(mapStateToProps)(HomeContainer);
