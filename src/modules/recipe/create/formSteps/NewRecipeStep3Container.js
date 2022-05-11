@@ -8,7 +8,7 @@ import DraggableFlatList from 'react-native-draggable-flatlist';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import * as Routing from 'routes/Routing';
-import { newRecipe } from 'services/api/ApiCalls';
+import { newRecipe, editRecipe } from 'services/api/ApiCalls';
 import { connect } from 'react-redux';
 
 import { newRecipeStyle, newRecipeStep3 } from '../newRecipe.style';
@@ -26,7 +26,7 @@ function NewRecipeStep3({ prevStep, handleChange, values, dataUser, accessToken 
       >
         <ImageBackground
           style={newRecipeStep3.listItemBackground}
-          source={item.stepImg.length !== 0
+          source={item.stepImg !== null && item.stepImg.length !== 0
             ? { uri: `data:image/png;base64,${item.stepImg}` }
             : require('resources/assets/images/default.jpg')}
         >
@@ -96,7 +96,11 @@ function NewRecipeStep3({ prevStep, handleChange, values, dataUser, accessToken 
   };
 
   const postData = () => {
-    newRecipe(dataUser.id, accessToken, values).then((response) => console.log(response));
+    if (values.id === undefined) {
+      newRecipe(dataUser.id, accessToken, values).then(() => Routing.pop());
+    } else {
+      editRecipe(accessToken, values).then(() => Routing.pop());
+    }
   };
 
   return (

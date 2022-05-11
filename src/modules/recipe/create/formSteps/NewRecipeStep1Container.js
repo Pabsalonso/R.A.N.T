@@ -84,7 +84,7 @@ export default function NewRecipeStep1({ nextStep, handleChange, values }) {
       {/* Imagen */}
       <Text style={newRecipeStyle.label}>Foto de la cabecera y listados</Text>
       <Image
-        source={values.img.length !== 0
+        source={values.img !== null && values.img.length !== 0
           ? { uri: `data:image/png;base64,${values.img}` }
           : require('resources/assets/images/emptyImg.png')}
         style={newRecipeStyle.imgContainer}
@@ -161,7 +161,7 @@ export default function NewRecipeStep1({ nextStep, handleChange, values }) {
         <TouchableOpacity
           activeOpacity={0.8}
           style={newRecipeStyle.continue}
-          onPress={() => { if (validator()) { nextStep(); } }}
+          onPress={() => { /*if (validator()) { */nextStep(); } }
         >
           <Text style={newRecipeStyle.continueText}>
             {' '}

@@ -11,7 +11,7 @@ import { createStepStyle } from './createStep.style';
 
 export default function EditStepContainer({ editStep, stepData }) {
   const [visible, setVisible] = useState(false);
-  const [stepTitle, setstepTitle] = useState(stepData.stepTitle);
+  const [stepTitle, setstepTitle] = useState(stepData.title);
   const [stepText, setstepText] = useState(stepData.stepText);
   const [stepImg, setstepImg] = useState(stepData.stepImg);
 
