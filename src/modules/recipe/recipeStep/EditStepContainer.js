@@ -46,7 +46,7 @@ export default function EditStepContainer({ editStep, stepData }) {
         {/* Imagen */}
         <Text style={createStepStyle.label}> Foto del paso </Text>
         <Image
-          source={stepImg.length !== 0
+          source={stepImg !== null && stepImg.length !== 0
             ? { uri: `data:image/png;base64,${stepImg}` }
             : require('resources/assets/images/emptyImg.png')}
           style={createStepStyle.imgContainer}

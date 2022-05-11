@@ -1,7 +1,6 @@
 import React from 'react';
 import { SafeAreaView, Text, View, FlatList, ImageBackground, TouchableOpacity } from 'react-native';
 import * as Routing from 'routes/Routing';
-import Spinner from 'react-native-loading-spinner-overlay';
 
 import { getUserRecipes } from 'services/api/ApiCalls';
 import { connect } from 'react-redux';
@@ -12,6 +11,7 @@ import BaseComponent from 'base/BaseComponent';
 
 // Styles
 import { homeStyle } from 'modules/home/home.style';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 class UserRecipesContainer extends BaseComponent {
   constructor(props) {
@@ -36,6 +36,17 @@ class UserRecipesContainer extends BaseComponent {
     });
   }
 
+  iconColor = (dificulty) => {
+    switch (dificulty) {
+      case 'Fácil':
+        return 'green';
+      case 'Medio':
+        return '#FDB40B';
+      default:
+        return 'red';
+    }
+  }
+
   render() {
     return (
       <SafeAreaView style={homeStyle.container}>
@@ -51,15 +62,34 @@ class UserRecipesContainer extends BaseComponent {
                   <TouchableOpacity onPress={() => Routing.openRecipes(item)}>
                     <ImageBackground
                       style={homeStyle.recipeImg}
-                      source={{ uri: 'https://reactnative.dev/img/tiny_logo.png' }}
+                      source={item.img !== null && item.img.length !== 0
+                        ? { uri: `data:image/png;base64,${item.img}` }
+                        : require('resources/assets/images/background-table.jpg')}
                     >
                       <Text style={homeStyle.recipeName}>{item.title}</Text>
                     </ImageBackground>
                     <View style={homeStyle.recipeCardInfo}>
                       <Text>Estrellas</Text>
-                      <Text>Tiempo</Text>
-                      <Text>Dificultad</Text>
-                      <Text>Acciones</Text>
+                      <View style={homeStyle.iconLabel}>
+                        <Icon name="alarm" size={30} />
+                        <Text>
+                          {item.prepTime}
+                          {' '}
+                          min
+                        </Text>
+                      </View>
+                      <View style={homeStyle.iconLabel}>
+                        <Icon
+                          name="local-dining"
+                          size={20}
+                          color="white"
+                          style={{ backgroundColor: this.iconColor(item.dificulty), borderRadius: 50, padding:5 }}
+                        />
+                        <Text>{` `}{item.dificulty}</Text>
+                      </View>
+                      <View style={homeStyle.iconLabel}>
+                        <Icon name="collections" size={25} onPress={() => Routing.openEditUserRecipes(item)} />
+                      </View>
                     </View>
                   </TouchableOpacity>
                 </View>

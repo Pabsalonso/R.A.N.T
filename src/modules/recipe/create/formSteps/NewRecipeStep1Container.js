@@ -91,7 +91,7 @@ export default function NewRecipeStep1({ nextStep, handleChange, values }) {
       />
       {/* Botones de añadir/eliminar imagen */}
       <View style={newRecipeStyle.buttonsContainer}>
-        <View style={values.img.length !== 0
+        <View style={values.img !== null && values.img.length !== 0
           ? newRecipeStyle.selectImageButton
           : newRecipeStyle.selectImageButtonOnly}
         >
@@ -100,7 +100,7 @@ export default function NewRecipeStep1({ nextStep, handleChange, values }) {
             onPress={() => setVisible(true)}
           />
         </View>
-        { values.img.length !== 0
+        {values.img !== null && values.img.length !== 0
         && (
         <View style={newRecipeStyle.removeImageButton}>
           <Button

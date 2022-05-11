@@ -12,8 +12,10 @@ import { newRecipe, editRecipe } from 'services/api/ApiCalls';
 import { connect } from 'react-redux';
 
 import { newRecipeStyle, newRecipeStep3 } from '../newRecipe.style';
+import Spinner from 'react-native-loading-spinner-overlay/lib';
 
 function NewRecipeStep3({ prevStep, handleChange, values, dataUser, accessToken }) {
+  const [loading, setLoading] = useState(false);
   const [updateState, setUpdateState] = useState(values.steps);
   const [count, setcount] = useState((values.steps.length !== undefined) ? values.steps.length + 1 : 1);
 
@@ -96,15 +98,23 @@ function NewRecipeStep3({ prevStep, handleChange, values, dataUser, accessToken 
   };
 
   const postData = () => {
+    setLoading(true);
     if (values.id === undefined) {
-      newRecipe(dataUser.id, accessToken, values).then(() => Routing.pop());
+      newRecipe(dataUser.id, accessToken, values).then(() => { setLoading(false); Routing.pop(); });
     } else {
-      editRecipe(accessToken, values).then(() => Routing.pop());
+      editRecipe(accessToken, values).then(() => { setLoading(false); Routing.pop(); Routing.refresh(); });
     }
   };
 
   return (
     <View style={newRecipeStyle.container}>
+      { loading
+        && (
+        <Spinner
+          visible
+          textContent="Cargando..."
+        />
+        )}
       <View style={{ flex: 1 }}>
         <DraggableFlatList
           style={newRecipeStep3.list}
