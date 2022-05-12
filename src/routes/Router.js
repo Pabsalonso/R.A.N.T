@@ -20,6 +20,7 @@ import * as Routing from 'routes/Routing';
 // Views
 import HomeContainer from 'modules/home/HomeContainer';
 import RecipeContainer from 'modules/recipe/RecipeContainer';
+import FavouritesContainer from 'modules/recipe/favourites/FavouritesContainer';
 import CreateRecipeContainer from 'modules/recipe/create/CreateRecipeContainer';
 import CreateStepContainer from 'modules/recipe/recipeStep/CreateStepContainer';
 import EditStepContainer from '../modules/recipe/recipeStep/EditStepContainer';
@@ -35,8 +36,6 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 class RouterContainer extends BaseComponent {
   render() {
-    const { accessToken } = this.props;
-
     return (
       <Router sceneStyle={styles.router} backAndroidHandler={onBackNative} hideNavBar>
         <Modal
@@ -66,6 +65,7 @@ class RouterContainer extends BaseComponent {
                 />
               </Drawer>
               <Scene key={Routing.userRecipes} component={UserRecipesContainer} navigationBarStyle={styles.navBarColor} />
+              <Scene key={Routing.userFavourites} component={FavouritesContainer} navigationBarStyle={styles.navBarColor} />
               <Scene key={Routing.editUserRecipes} component={EditRecipeContainer} navigationBarStyle={styles.navBarColor} />
               <Scene key={Routing.createNewRecipe} component={CreateRecipeContainer} navigationBarStyle={styles.navBarColor} />
               <Scene key={Routing.createNewRecipeStep} component={CreateStepContainer} navigationBarStyle={styles.navBarColor} />
@@ -73,7 +73,7 @@ class RouterContainer extends BaseComponent {
               <Scene key={Routing.recipe} component={RecipeContainer} navigationBarStyle={styles.navBarColor} />
 
               {/* Auth Scenes */}
-              <Scene key={Routing.register} component={RegisterContainer} navTransparent/>
+              <Scene key={Routing.register} component={RegisterContainer} navTransparent />
               <Scene key={Routing.login} component={LoginContainer} navTransparent />
 
               {/** Modal */}

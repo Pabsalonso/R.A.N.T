@@ -26,6 +26,12 @@ export const getUserRecipes = async (userId) => (
     .catch((error) => console.log(error))
 );
 
+export const getUserFavourites = async (userId) => (
+  fetch(`http://192.168.1.143:8000/api/user/${userId}/favourites`)
+    .then((response) => response.json())
+    .catch((error) => console.log(error)) // to catch the errors if any
+);
+
 /** ***  *** ***  */
 /** LLamadas POST */
 /** *** *** ****  */
@@ -96,6 +102,36 @@ export const newRecipe = async (userId, userToken, values) => (
     }),
   }).then((response) => response.json())
     .catch((error) => error) // to catch the errors if any;
+);
+
+export const toggleFavourite = async (userId, recipeId) => (
+  fetch(`http://192.168.1.143:8000/api/recipe/favourite/${recipeId}`, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      userId,
+    }),
+  })
+    .then((response) => response.json())
+    .catch((error) => console.log(error))
+);
+
+export const checkFavourite = async (userId, recipeId) => (
+  fetch(`http://192.168.1.143:8000/api/recipe/favouriteCheck/${recipeId}`, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      userId,
+    }),
+  })
+    .then((response) => response.json())
+    .catch((error) => console.log(error))
 );
 
 /** ***  *** ***  */

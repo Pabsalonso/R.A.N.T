@@ -26,6 +26,7 @@ export const home = 'home';
 export const recipe = 'recipe';
 export const userRecipes = 'userRecipes';
 export const editUserRecipes = 'editUserRecipes';
+export const userFavourites = 'userFavourites';
 export const createNewRecipe = 'createNewRecipe';
 export const createNewRecipeStep = 'createNewRecipeStep';
 export const editRecipeStep = 'editRecipeStep';
@@ -51,6 +52,9 @@ export const openUserRecipes = (...params) => {
 };
 export const openEditUserRecipes = (...params) => {
   if (!(currentScene() === editUserRecipes)) route(editUserRecipes, ...params);
+};
+export const openUserFavourites = (...params) => {
+  if (!(currentScene() === userFavourites)) route(userFavourites, ...params);
 };
 export const openCreateRecipe = (...params) => {
   if (!(currentScene() === createNewRecipe)) route(createNewRecipe, ...params);

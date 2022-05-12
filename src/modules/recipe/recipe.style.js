@@ -27,11 +27,11 @@ export const recipeStyle = StyleSheet.create({
   },
   headerView: {
     width: '100%',
-    justifyContent: 'flex-end',
     alignItems: 'center',
   },
   recipeImg: {
     width: '100%',
+    alignItems: 'flex-end',
     height: 160,
   },
   portraitImg: {
@@ -88,5 +88,11 @@ export const recipeStyle = StyleSheet.create({
   recipeDescription: {
     textAlign: 'center',
     paddingHorizontal: '5%',
+  },
+  favoriteIcon: {
+    margin: 10,
+    padding: 3,
+    // borderRadius: 150,
+    // backgroundColor: 'white',
   },
 });

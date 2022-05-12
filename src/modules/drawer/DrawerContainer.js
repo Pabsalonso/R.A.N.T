@@ -41,7 +41,10 @@ function DrawerContainer({ accessToken, dataUser, showLogoutMessage }) {
           </View>
         ) : (
           <>
-            <TouchableOpacity style={drawerStyle.drawerOption}>
+            <TouchableOpacity
+              style={drawerStyle.drawerOption}
+              onPress={() => Routing.openUserFavourites()}
+            >
               <Icon name="favorite-border" size={25} />
               <Text style={drawerStyle.font}>Favoritos</Text>
             </TouchableOpacity>

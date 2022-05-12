@@ -1,16 +1,30 @@
+/* eslint-disable global-require */
 import React from 'react';
 import { SafeAreaView, View, Text, Image, ImageBackground } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-
-// Base
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import BaseComponent from 'base/BaseComponent';
+
+import { connect } from 'react-redux';
+import { checkFavourite, toggleFavourite } from 'services/api/ApiCalls';
 
 // recipeStyle
 import { recipeStyle } from 'modules/recipe/recipe.style';
-import { connect } from 'react-redux';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 
 class RecipeContainer extends BaseComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      favourite: null };
+  }
+
+  componentDidMount() {
+    if (this.props.dataUser !== null) {
+      checkFavourite(this.props.dataUser.id, this.props.id)
+        .then((response) => this.setState({ favourite: response }));
+    }
+  }
+
   iconColor = (dificulty) => {
     switch (dificulty) {
       case 'Fácil':
@@ -22,20 +36,44 @@ class RecipeContainer extends BaseComponent {
     }
   }
 
+  toggleFavourite = () => {
+    toggleFavourite(this.props.dataUser.id, this.props.id)
+      .then((response) => {
+        this.setState({ favourite: response });
+      });
+  }
+
+  renderFavourite = () => {
+    if (this.props.dataUser !== null) {
+      return (this.state.favourite)
+        ? (
+          <Icon
+            name="favorite"
+            size={40}
+            color="red"
+            style={recipeStyle.favoriteIcon}
+            onPress={this.toggleFavourite}
+          />
+        )
+        : (
+          <Icon
+            name="favorite-border"
+            size={40}
+            color="black"
+            style={recipeStyle.favoriteIcon}
+            onPress={this.toggleFavourite}
+          />
+        );
+    }
+    return null;
+  }
+
   render() {
     const recipe = this.props;
     return (
       <SafeAreaView style={recipeStyle.container}>
 
         <ScrollView style={recipeStyle.containerContent}>
-          {/* Titulo de la receta y barra de volver atras */}
-          <ImageBackground
-            style={recipeStyle.recipeTitleContainer}
-            source={require('../../resources/assets/images/background-dotted.jpg')}
-          >
-            <Text style={[recipeStyle.text, recipeStyle.recipeTitles]}>{this.props.title}</Text>
-          </ImageBackground>
-
           {/* Imagen de la receta, con imagen de abuela y botón me gusta */}
           <View style={recipeStyle.headerView}>
             <ImageBackground
@@ -43,7 +81,9 @@ class RecipeContainer extends BaseComponent {
               source={recipe.img !== null && recipe.img.length !== 0
                 ? { uri: `data:image/png;base64,${recipe.img}` }
                 : require('resources/assets/images/background-table.jpg')}
-            />
+            >
+              {this.renderFavourite()}
+            </ImageBackground>
             <Image
               style={recipeStyle.portraitImg}
               source={(recipe.dataUser !== null) && (recipe.dataUser.picture !== null)
