@@ -21,7 +21,6 @@ function DrawerContainer({ accessToken, dataUser, showLogoutMessage }) {
               ? { uri: `data:image/png;base64,${dataUser.picture}` }
               : require('resources/assets/images/granny-pfp.jpg')}
             style={drawerStyle.img}
-            // onPress={console.log(dataUser)}
           />
         </View>
 
@@ -41,6 +40,13 @@ function DrawerContainer({ accessToken, dataUser, showLogoutMessage }) {
           </View>
         ) : (
           <>
+            <TouchableOpacity
+              style={drawerStyle.drawerOption}
+              onPress={() => Routing.openProfile()}
+            >
+              <Icon name="person" size={25} />
+              <Text style={drawerStyle.font}>Mi Perfil</Text>
+            </TouchableOpacity>
             <TouchableOpacity
               style={drawerStyle.drawerOption}
               onPress={() => Routing.openUserFavourites()}

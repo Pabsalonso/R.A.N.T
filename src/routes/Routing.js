@@ -30,6 +30,7 @@ export const userFavourites = 'userFavourites';
 export const createNewRecipe = 'createNewRecipe';
 export const createNewRecipeStep = 'createNewRecipeStep';
 export const editRecipeStep = 'editRecipeStep';
+export const profile = 'profile';
 
 /** ******** */
 /** LightBox */
@@ -73,7 +74,9 @@ export const openLogin = (...params) => {
   drawerClose();
   if (!(currentScene() === login)) route(login, ...params);
 };
-
+export const openProfile = (...params) => {
+  if (!(currentScene() === profile)) route(profile, ...params);
+};
 /** ******* */
 /** Methods */
 /** ******* */

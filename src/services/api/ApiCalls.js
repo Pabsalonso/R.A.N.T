@@ -160,3 +160,35 @@ export const editRecipe = async (userToken, values) => (
   }).then((response) => response.json())
     .catch((error) => error) // to catch the errors if any;
 );
+
+export const editProfile = async (userToken, id, name, profile) => (
+  fetch(`http://192.168.1.143:8000/api/user/${Number(id)}/edit`, {
+    method: 'PUT',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${userToken}`,
+    },
+    body: JSON.stringify({
+      name,
+      picture: profile,
+    }),
+  }).then((response) => response.json())
+    .catch((error) => error) // to catch the errors if any;
+);
+
+/**  ***  *** ***   */
+/** LLamadas DELETE */
+/**  *** *** ****   */
+
+export const deleteRecipe = async (id, userToken) => (
+  fetch(`http://192.168.1.143:8000/api/recipe/delete/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${userToken}`,
+    },
+  }).then((response) => response.json())
+    .catch((error) => error) // to catch the errors if any;
+);

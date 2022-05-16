@@ -4,31 +4,28 @@ import { View, Text } from 'native-base';
 import React from 'react';
 import BaseComponent from 'base/BaseComponent';
 import { connect } from 'react-redux';
-
+import * as Routing from 'routes/Routing';
 import { ScrollView, TextInput, TouchableOpacity } from 'react-native-gesture-handler';
-import * as FormValidator from '../../../utils/validators/FormValidators';
-// import * as Routing from 'routes/Routing';
+import * as FormValidator from 'utils/validators/FormValidators';
 import { Alert, Image } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import ImagePickerModal from 'modules/imagePicker/ImagePickerModal';
 import * as ImagePicker from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import { register } from 'services/api/ApiCalls';
-import { setUserTokens, setUserData } from '../../../services/user/UserActions';
+import { editProfile } from 'services/api/ApiCalls';
+import { setUserTokens, setUserData } from 'services/user/UserActions';
 
-import { registerStyle } from './register.style';
+import { registerStyle } from 'modules/auth/register/register.style';
 
-class RegisterContainer extends BaseComponent {
+class ProfileContainer extends BaseComponent {
   constructor(props) {
     super(props);
     this.state = {
       spinner: false,
-      email: '',
-      password: '',
-      confirmPassword: '',
-      profile: '',
-      name: '',
+      email: this.props.dataUser.email,
+      picture: this.props.dataUser.picture,
+      name: this.props.dataUser.name,
       visible: false,
     };
     this.onSubmit = this.onSubmit.bind(this);
@@ -41,7 +38,7 @@ class RegisterContainer extends BaseComponent {
       includeBase64: true,
     };
     ImagePicker.launchImageLibrary(options).then((response) => {
-      this.setState({ profile: response.assets !== undefined ? response.assets[0].base64 : '' });
+      this.setState({ picture: response.assets !== null ? response.assets[0].base64 : '' });
       this.setState({ visible: false });
     }).catch();
   };
@@ -53,25 +50,20 @@ class RegisterContainer extends BaseComponent {
       includeBase64: true,
     };
     ImagePicker.launchCamera(options).then((response) => {
-      this.setState({ profile: response.assets !== undefined ? response.assets[0].base64 : '' });
+      this.setState({ picture: response.assets !== null ? response.assets[0].base64 : '' });
       this.setState({ visible: false });
     }).catch();
   };
 
-   onSubmit = ({ email, password, confirmPassword, profile, name }) => {
-     if (!FormValidator.emailValidator(email)
-       || !FormValidator.isValidPassword(password)) {
-       Alert.alert('Error', 'Email o contraseña no cumple con requisitos');
+   onSubmit = ({ picture, name }) => {
+     if (!FormValidator.isValidPassword(name)) {
+       Alert.alert('Error', 'EL campo nombre debe ser válido');
      } else {
        this.setState({ spinner: true });
-       register(email, password, confirmPassword, profile, name).then((result) => {
-         if (result.code === 401) {
-           Alert.alert('Error', 'El correo ya se encuentra en uso');
-           this.setState({ spinner: false });
-         } else {
-           this.props.setUserTokens(result.token, '');
-           this.props.setUserData(result);
-         }
+       editProfile(this.props.accessToken, this.props.dataUser.id, name, picture).then((result) => {
+         this.props.setUserData(result);
+         this.setState({ spinner: false });
+         Routing.pop();
        });
      }
    };
@@ -89,15 +81,18 @@ class RegisterContainer extends BaseComponent {
         />
         )}
          <View style={registerStyle.titleContainer}>
-           <Text style={registerStyle.title}> Registrarse</Text>
+           <Text style={registerStyle.title}> Mi Perfil</Text>
          </View>
-         <Text style={registerStyle.subtitle}>Bienvenido! Proporcionanos los siguientes datos para darte de alta</Text>
+         <Text style={registerStyle.subtitle}>
+           Bienvenido de nuevo! Si deseas cambiar el nombre de tu cuenta
+           o foto de perfil, modifica los campos
+         </Text>
 
          <View style={registerStyle.imageContainer}>
            <View style={registerStyle.profileImgContainer}>
              <Image
-               source={values.profile.length !== 0
-                 ? { uri: `data:image/png;base64,${values.profile}` }
+               source={(values.picture ?? null) && (values.picture.length !== 0)
+                 ? { uri: `data:image/png;base64,${values.picture}` }
                  : require('resources/assets/images/emptyImg.png')}
                style={registerStyle.img}
              />
@@ -110,13 +105,13 @@ class RegisterContainer extends BaseComponent {
              >
                <Icon name="add-a-photo" size={20} />
 
-               <Text>{' '}{values.profile === '' ? 'Añadir foto de Perfil' : 'Editar foto de Perfil'}{' '}</Text>
+               <Text>{' '}{values.picture === '' ? 'Añadir foto de Perfil' : 'Editar foto de Perfil'}{' '}</Text>
              </TouchableOpacity>
-             { values.profile.length !== 0 && (
+             { ((values.picture ?? null) && (values.picture.length !== 0)) && (
                <TouchableOpacity
                  activeOpacity={0.8}
                  style={registerStyle.removeImgButton}
-                 onPress={() => this.setState({ profile: '' })}
+                 onPress={() => this.setState({ picture: '' })}
                >
                  <Icon name="delete" color="white" size={20} />
 
@@ -129,26 +124,9 @@ class RegisterContainer extends BaseComponent {
          <View style={registerStyle.containerContent}>
            <TextInput
              placeholder="Nombre y apellidos"
+             value={this.state.name}
              onChangeText={(result) => this.setState({ name: result })}
              keyboardType="visible-password"
-             style={registerStyle.input}
-           />
-           <TextInput
-             placeholder="Email"
-             onChangeText={(result) => this.setState({ email: result })}
-             keyboardType="visible-password"
-             style={registerStyle.input}
-           />
-           <TextInput
-             placeholder="Contraseña"
-             secureTextEntry
-             onChangeText={(result) => this.setState({ password: result })}
-             style={registerStyle.input}
-           />
-           <TextInput
-             placeholder="Repetir contraseña"
-             secureTextEntry
-             onChangeText={(result) => this.setState({ confirmPassword: result })}
              style={registerStyle.input}
            />
            {/** Falta Validatorss */}
@@ -158,7 +136,7 @@ class RegisterContainer extends BaseComponent {
              style={registerStyle.registerButton}
              onPress={() => this.onSubmit(this.state)}
            >
-             <Text style={registerStyle.registerButtonFont}>{' '}Crear cuenta{' '}</Text>
+             <Text style={registerStyle.registerButtonFont}>{' '}Editar información{' '}</Text>
            </TouchableOpacity>
          </View>
 
@@ -173,9 +151,18 @@ class RegisterContainer extends BaseComponent {
    }
 }
 
+const mapStateToProps = ({ UserReducer }) => {
+  const { accessToken } = UserReducer;
+  const { dataUser } = UserReducer;
+  return {
+    accessToken,
+    dataUser,
+  };
+};
+
 const mapStateToPropsActions = {
   setUserTokens,
   setUserData,
 };
 
-export default connect(null, mapStateToPropsActions)(RegisterContainer);
+export default connect(mapStateToProps, mapStateToPropsActions)(ProfileContainer);

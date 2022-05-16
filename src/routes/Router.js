@@ -27,6 +27,8 @@ import EditStepContainer from '../modules/recipe/recipeStep/EditStepContainer';
 import DrawerContainer from 'modules/drawer/DrawerContainer';
 import UserRecipesContainer from '../modules/recipe/read/UserRecipesContainer';
 import EditRecipeContainer from '../modules/recipe/edit/EditRecipeContainer';
+import ProfileContainer from 'modules/profile/ProfileContainer';
+
 
 // Auth Containers
 import RegisterContainer from 'modules/auth/register/RegisterContainer';
@@ -71,6 +73,7 @@ class RouterContainer extends BaseComponent {
               <Scene key={Routing.createNewRecipeStep} component={CreateStepContainer} navigationBarStyle={styles.navBarColor} />
               <Scene key={Routing.editRecipeStep} component={EditStepContainer} navigationBarStyle={styles.navBarColor} />
               <Scene key={Routing.recipe} component={RecipeContainer} navigationBarStyle={styles.navBarColor} />
+              <Scene key={Routing.profile} component={ProfileContainer} navTransparent />
 
               {/* Auth Scenes */}
               <Scene key={Routing.register} component={RegisterContainer} navTransparent />
