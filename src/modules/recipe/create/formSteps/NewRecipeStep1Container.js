@@ -161,7 +161,7 @@ export default function NewRecipeStep1({ nextStep, handleChange, values }) {
         <TouchableOpacity
           activeOpacity={0.8}
           style={newRecipeStyle.continue}
-          onPress={() => { /*if (validator()) { */nextStep(); } }
+          onPress={() => { if (validator()) { nextStep(); } }}
         >
           <Text style={newRecipeStyle.continueText}>
             {' '}

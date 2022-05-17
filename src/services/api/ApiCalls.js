@@ -32,6 +32,12 @@ export const getUserFavourites = async (userId) => (
     .catch((error) => console.log(error)) // to catch the errors if any
 );
 
+export const getComments = async (recipeId) => (
+  fetch(`http://192.168.1.143:8000/api/comments/${recipeId}`)
+    .then((response) => response.json())
+    .catch((error) => console.log(error)) // to catch the errors if any
+);
+
 /** ***  *** ***  */
 /** LLamadas POST */
 /** *** *** ****  */
@@ -128,6 +134,23 @@ export const checkFavourite = async (userId, recipeId) => (
     },
     body: JSON.stringify({
       userId,
+    }),
+  })
+    .then((response) => response.json())
+    .catch((error) => console.log(error))
+);
+
+export const postComment = async (recipeId, userId, textComment) => (
+  fetch('http://192.168.1.143:8000/api/comment', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      recipeId,
+      userId,
+      textComment,
     }),
   })
     .then((response) => response.json())

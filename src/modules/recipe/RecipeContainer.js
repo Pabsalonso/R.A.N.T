@@ -1,12 +1,12 @@
 /* eslint-disable global-require */
 import React from 'react';
-import { SafeAreaView, View, Text, Image, ImageBackground } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { SafeAreaView, View, Text, Image, ImageBackground, Alert } from 'react-native';
+import { ScrollView, TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import BaseComponent from 'base/BaseComponent';
 
 import { connect } from 'react-redux';
-import { checkFavourite, toggleFavourite } from 'services/api/ApiCalls';
+import { checkFavourite, toggleFavourite, getComments, postComment } from 'services/api/ApiCalls';
 
 // recipeStyle
 import { recipeStyle } from 'modules/recipe/recipe.style';
@@ -14,7 +14,10 @@ import { recipeStyle } from 'modules/recipe/recipe.style';
 class RecipeContainer extends BaseComponent {
   constructor(props) {
     super(props);
+    this.inputRef = React.createRef();
     this.state = {
+      textComment: '',
+      comments: [],
       favourite: null };
   }
 
@@ -23,6 +26,8 @@ class RecipeContainer extends BaseComponent {
       checkFavourite(this.props.dataUser.id, this.props.id)
         .then((response) => this.setState({ favourite: response }));
     }
+    getComments(this.props.id)
+      .then((response) => this.setState({ comments: response }));
   }
 
   iconColor = (dificulty) => {
@@ -33,6 +38,20 @@ class RecipeContainer extends BaseComponent {
         return '#FDB40B';
       default:
         return 'red';
+    }
+  }
+
+  postComment = () => {
+    if (this.state.textComment.length > 0) {
+      postComment(this.props.id, this.props.dataUser.id, this.state.textComment)
+        .then((response) => {
+          const newComments = [...this.state.comments];
+          newComments.push(response);
+          this.setState({ comments: newComments, textComment: '' });
+          this.inputRef.current.clear();
+        });
+    } else {
+      Alert.alert('Error', 'Escribe algo para comentar');
     }
   }
 
@@ -173,6 +192,50 @@ class RecipeContainer extends BaseComponent {
           >
             <Text style={[recipeStyle.text, recipeStyle.recipeTitles]}>Comparte y Opina</Text>
           </ImageBackground>
+          <View style={recipeStyle.commentBoxView}>
+            <Text style={recipeStyle.stepTitle}>Comentarios</Text>
+            <View>
+              {this.state.comments.map((comment, i) => (
+                <View key={i} style={recipeStyle.comment}>
+                  <Text style={{ fontStyle: 'italic', color: 'grey' }}>{comment.user}</Text>
+                  <Text>{comment.textComment}</Text>
+                </View>
+              ))}
+            </View>
+          </View>
+
+          { (this.props.dataUser ?? null)
+            ? (
+              <>
+                <Text style={recipeStyle.addCommentText}>Escribe aquí para añadir un comentario</Text>
+                <TextInput
+                  ref={this.inputRef}
+                  style={recipeStyle.input}
+                  multiline
+                  numberOfLines={4}
+                  placeholder="Añade un comentario"
+                  onChangeText={(input) => this.setState({ textComment: input })}
+                />
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  style={recipeStyle.commentButton}
+                  onPress={() => this.postComment()}
+                >
+                  <Text style={recipeStyle.commentButtonText}>
+                    {' '}
+                    ¡He dicho!
+                    {' '}
+                  </Text>
+                </TouchableOpacity>
+
+              </>
+
+            )
+            : (
+              <Text style={recipeStyle.loginMessage}>
+                Inicia sesión o registrate para poder dejar un comentario!
+              </Text>
+            )}
 
         </ScrollView>
       </SafeAreaView>

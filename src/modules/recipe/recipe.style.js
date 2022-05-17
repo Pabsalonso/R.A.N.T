@@ -1,7 +1,6 @@
 import { StyleSheet } from 'react-native';
 
 // Resources
-import { Style } from 'resources/styles';
 import * as Color from 'resources/values/color';
 
 export const recipeStyle = StyleSheet.create({
@@ -92,7 +91,41 @@ export const recipeStyle = StyleSheet.create({
   favoriteIcon: {
     margin: 10,
     padding: 3,
-    // borderRadius: 150,
-    // backgroundColor: 'white',
+  },
+  commentBoxView: {
+    padding: 20,
+  },
+  comment: {
+    paddingVertical: 5,
+    marginTop: 5,
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+  },
+  addCommentText: {
+    marginTop: 20,
+  },
+  input: {
+    borderColor: 'grey',
+    borderWidth: 2,
+  },
+  commentButton: {
+    width: 300,
+    height: 50,
+    marginVertical: 15,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#F0D500',
+    borderRadius: 20,
+  },
+  commentButtonText: {
+    height: '100%',
+    fontFamily: 'SendFlowers-Regular',
+    fontSize: 30,
+  },
+  loginMessage: {
+    backgroundColor: '#FFCF0B',
+    textAlign: 'center',
+    fontSize: 18,
+    padding: 10,
   },
 });
