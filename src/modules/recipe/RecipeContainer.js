@@ -105,8 +105,8 @@ class RecipeContainer extends BaseComponent {
             </ImageBackground>
             <Image
               style={recipeStyle.portraitImg}
-              source={(recipe.dataUser !== null) && (recipe.dataUser.picture !== null)
-                ? { uri: `data:image/png;base64,${recipe.dataUser.picture}` }
+              source={(recipe.user.picture !== null) && (recipe.user.picture !== null)
+                ? { uri: `data:image/png;base64,${recipe.user.picture}` }
                 : require('resources/assets/images/granny-pfp.jpg')}
             />
           </View>
@@ -139,6 +139,11 @@ class RecipeContainer extends BaseComponent {
           <Text style={recipeStyle.recipeDescription}>
             {recipe.text}
           </Text>
+
+          <View style={recipeStyle.headerView}>
+            <Text style={recipeStyle.stepTitle}>Autor:</Text>
+            <Text>{recipe.user.name}</Text>
+          </View>
           {/* Ingredientes */}
           <ImageBackground
             style={recipeStyle.recipeTitleContainer}

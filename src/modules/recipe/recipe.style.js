@@ -86,6 +86,7 @@ export const recipeStyle = StyleSheet.create({
   },
   recipeDescription: {
     textAlign: 'center',
+    marginBottom: 10,
     paddingHorizontal: '5%',
   },
   favoriteIcon: {
@@ -98,7 +99,7 @@ export const recipeStyle = StyleSheet.create({
   comment: {
     paddingVertical: 5,
     marginTop: 5,
-    borderTopWidth: 1,
+    // borderTopWidth: 1,
     borderBottomWidth: 1,
   },
   addCommentText: {

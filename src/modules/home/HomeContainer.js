@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 
 // Base
 import BaseComponent from 'base/BaseComponent';
-// import NavBarHome from '../navigation/NavBarHome';
+import NavBarHome from '../navigation/NavBarHome';
 // Resources
 
 // Styles
@@ -22,15 +22,19 @@ class HomeContainer extends BaseComponent {
       results: [],
       refreshing: false };
     this.handleResults = this.handleResults.bind(this);
+    this.closeSearch = this.closeSearch.bind(this);
   }
 
   handleResults(results) {
     this.setState({ results });
   }
 
+  closeSearch() {
+    this.setState({ results: [] });
+  }
+
   componentDidMount() {
     this.fetchAPIData();
-    // setInterval(this.fetchAPIData, 15000);
   }
 
   fetchAPIData = () => {
@@ -58,9 +62,17 @@ class HomeContainer extends BaseComponent {
     return (
       <SafeAreaView style={homeStyle.container}>
         <View>
-          {/* <NavBarHome handleResults={this.handleResults} dataSearch={this.state.recipes} /> */}
+
           <View style={homeStyle.containerContent}>
             <FlatList
+              ListHeaderComponent={(
+                <NavBarHome
+                  handleResults={this.handleResults}
+                  dataSearch={this.state.recipes}
+                  closeSearch={this.closeSearch}
+                />
+              )}
+              stickyHeaderIndices={[0]}
               refreshing={this.state.refreshing}
               onRefresh={this.fetchAPIData}
               style={homeStyle.recipesContainer}
@@ -91,9 +103,12 @@ class HomeContainer extends BaseComponent {
                           name="local-dining"
                           size={20}
                           color="white"
-                          style={{ backgroundColor: this.iconColor(item.dificulty), borderRadius: 50, padding:5 }}
+                          style={{ backgroundColor: this.iconColor(item.dificulty), borderRadius: 50, padding: 5 }}
                         />
-                        <Text>{` `}{item.dificulty}</Text>
+                        <Text>
+                          {' '}
+                          {item.dificulty}
+                        </Text>
                       </View>
                       {/* <Text>Acciones</Text> */}
                     </View>

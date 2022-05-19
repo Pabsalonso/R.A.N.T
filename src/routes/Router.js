@@ -29,11 +29,9 @@ import UserRecipesContainer from '../modules/recipe/read/UserRecipesContainer';
 import EditRecipeContainer from '../modules/recipe/edit/EditRecipeContainer';
 import ProfileContainer from 'modules/profile/ProfileContainer';
 
-
 // Auth Containers
 import RegisterContainer from 'modules/auth/register/RegisterContainer';
 import LoginContainer from '../modules/auth/login/LoginContainer';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 class RouterContainer extends BaseComponent {
@@ -60,10 +58,10 @@ class RouterContainer extends BaseComponent {
                   key={Routing.home}
                   title={strings('title.home')}
                   component={HomeContainer}
-                  renderLeftButton={drawerIcon}
-                  titleStyle={styles.titleStyle}
-                  renderRightButton={searchIcon}
-                  navigationBarStyle={styles.navBarColor}
+                  hideNavBar
+                  // renderLeftButton={drawerIcon}
+                  // titleStyle={styles.titleStyle}
+                  // navigationBarStyle={styles.navBarColor}
                 />
               </Drawer>
               <Scene key={Routing.userRecipes} component={UserRecipesContainer} navigationBarStyle={styles.navBarColor} />
@@ -121,28 +119,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFCF0B',
   },
 });
-
-const drawerIcon = () => (
-  <TouchableOpacity>
-    <Icon
-      name="menu"
-      size={30}
-      style={{ marginLeft: 25 }}
-      onPress={() => Routing.drawerOpen()}
-    />
-  </TouchableOpacity>
-);
-
-const searchIcon = () => (
-  <TouchableOpacity>
-    <Icon
-      name="menu"
-      size={30}
-      style={{ marginRight: 25 }}
-      onPress={() => Routing.drawerOpen()}
-    />
-  </TouchableOpacity>
-);
 
 const mapStateToProps = ({ UserReducer }) => {
   const { accessToken } = UserReducer;

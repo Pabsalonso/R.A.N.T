@@ -1,35 +1,49 @@
-import React from 'react';
-import { Text } from 'react-native';
-import NavBar, { NavButton, NavButtonText, NavTitle } from 'react-native-nav';
+import React, { useRef } from 'react';
+import { Text, StyleSheet } from 'react-native';
 import SearchBar from 'react-native-searchbar';
 import * as Routing from 'routes/Routing';
-// import { Icon } from 'react-native-vector-icons/Icon';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import { View } from 'native-base';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
-export default function NavBarHome(props) {
+// eslint-disable-next-line react/prop-types
+export default function NavBarHome({ dataSearch, handleResults, closeSearch }) {
+  const searchBarRef = useRef();
+
   function _onPressDrawer() {
     Routing.drawerOpen();
   }
 
   return (
-    <NavBar>
-      <NavButton onPress={() => _onPressDrawer()}>
-        {/* <Icon name="ios-add" size={30} color="#4F8EF7" /> */}
-        <Text>Drawer</Text>
-      </NavButton>
-      <NavTitle>
-        <Text> Titulo </Text>
-      </NavTitle>
-      <NavButton onPress={() => this.searchBar.show()}>
-        <Text>
-          Buscar
-        </Text>
-      </NavButton>
+    <View style={style.navBar}>
+      <TouchableOpacity>
+        <Icon name="menu" size={30} onPress={() => _onPressDrawer()} style={style.leftButton} />
+      </TouchableOpacity>
+      <Text style={style.leftButton}> Principal </Text>
+      <TouchableOpacity>
+        <Icon name="search" size={30} style={style.rightButton} onPress={() => searchBarRef.current.show()} />
+      </TouchableOpacity>
       <SearchBar
-        ref={(ref) => this.searchBar = ref}
-        data={props.dataSearch}
-        handleResults={props.handleResults}
-        clearOnHide
+        ref={searchBarRef}
+        data={dataSearch}
+        handleResults={handleResults}
+        onHide={closeSearch}
       />
-    </NavBar>
+    </View>
   );
 }
+
+const style = StyleSheet.create({
+  navBar: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: '#FFCF0B',
+    height: 60,
+    paddingHorizontal: 20,
+  },
+  leftButton: {
+  },
+  rightButton: {
+  },
+});
