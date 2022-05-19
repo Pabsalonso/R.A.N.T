@@ -2,6 +2,7 @@ import React from 'react';
 import { SafeAreaView, Text, View, FlatList, ImageBackground, TouchableOpacity } from 'react-native';
 import * as Routing from 'routes/Routing';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { Rating } from 'react-native-ratings';
 
 import { getRecipes } from 'services/api/ApiCalls';
 import { connect } from 'react-redux';
@@ -89,7 +90,12 @@ class HomeContainer extends BaseComponent {
                       <Text style={homeStyle.recipeName}>{item.title}</Text>
                     </ImageBackground>
                     <View style={homeStyle.recipeCardInfo}>
-                      <Text>Estrellas</Text>
+                      <Rating
+                        readonly
+                        imageSize={20}
+                        startingValue={item.rating}
+                        tintColor="#FFFDE0"
+                      />
                       <View style={homeStyle.iconLabel}>
                         <Icon name="alarm" size={30} />
                         <Text>

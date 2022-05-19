@@ -85,5 +85,10 @@ export default {
   /** ******* */
   /** MODULES */
   /** ******* */
-
+  auth: {
+    logout: {
+      title: '¿Seguro que deseas salir?',
+      message: 'Se cerrará tu sesión',
+    },
+  },
 };

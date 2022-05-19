@@ -157,6 +157,22 @@ export const postComment = async (recipeId, userId, textComment) => (
     .catch((error) => console.log(error))
 );
 
+export const rateRecipe = async (recipeId, rating) => (
+  fetch('http://192.168.1.143:8000/api/recipe/rate', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      recipeId,
+      rating,
+    }),
+  })
+    .then((response) => response.json())
+    .catch((error) => console.log(error))
+);
+
 /** ***  *** ***  */
 /** LLamadas PUT */
 /** *** *** ****  */

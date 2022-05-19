@@ -12,6 +12,7 @@ import BaseComponent from 'base/BaseComponent';
 
 // Styles
 import { homeStyle } from 'modules/home/home.style';
+import { Rating } from 'react-native-ratings';
 
 class FavouritesContainer extends BaseComponent {
   constructor(props) {
@@ -69,7 +70,12 @@ class FavouritesContainer extends BaseComponent {
                       <Text style={homeStyle.recipeName}>{item.title}</Text>
                     </ImageBackground>
                     <View style={homeStyle.recipeCardInfo}>
-                      <Text>Estrellas</Text>
+                      <Rating
+                        readonly
+                        imageSize={20}
+                        startingValue={item.rating}
+                        tintColor="#FFFDE0"
+                      />
                       <View style={homeStyle.iconLabel}>
                         <Icon name="alarm" size={30} />
                         <Text>

@@ -3,10 +3,12 @@ import React from 'react';
 import { SafeAreaView, View, Text, Image, ImageBackground, Alert } from 'react-native';
 import { ScrollView, TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { Rating } from 'react-native-ratings';
 import BaseComponent from 'base/BaseComponent';
 
 import { connect } from 'react-redux';
 import { checkFavourite, toggleFavourite, getComments, postComment } from 'services/api/ApiCalls';
+import RateModal from '../starRate/RateModalContainer';
 
 // recipeStyle
 import { recipeStyle } from 'modules/recipe/recipe.style';
@@ -18,7 +20,10 @@ class RecipeContainer extends BaseComponent {
     this.state = {
       textComment: '',
       comments: [],
+      rating: this.props.rating,
+      modalVisible: false,
       favourite: null };
+    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
@@ -28,6 +33,10 @@ class RecipeContainer extends BaseComponent {
     }
     getComments(this.props.id)
       .then((response) => this.setState({ comments: response }));
+  }
+
+  handleChange = (input, value) => {
+    this.setState({ [input]: value });
   }
 
   iconColor = (dificulty) => {
@@ -105,14 +114,18 @@ class RecipeContainer extends BaseComponent {
             </ImageBackground>
             <Image
               style={recipeStyle.portraitImg}
-              source={(recipe.user.picture !== null) && (recipe.user.picture !== null)
+              source={recipe.user.picture !== null
                 ? { uri: `data:image/png;base64,${recipe.user.picture}` }
                 : require('resources/assets/images/granny-pfp.jpg')}
             />
           </View>
           {/* Banner de info. i.e stars, tiempo, dificultad */}
           <View style={recipeStyle.recipeCardInfo}>
-            <Text>Estrellas</Text>
+            <Rating
+              readonly
+              imageSize={20}
+              startingValue={this.state.rating}
+            />
             <View style={recipeStyle.iconLabel}>
               <Icon name="alarm" size={30} />
               <Text>
@@ -197,7 +210,15 @@ class RecipeContainer extends BaseComponent {
           >
             <Text style={[recipeStyle.text, recipeStyle.recipeTitles]}>Comparte y Opina</Text>
           </ImageBackground>
+          <View>
+            <View>
+              <Icon name="stars" size={30} onPress={() => this.setState({ modalVisible: true })} />
+              <Text style={recipeStyle.stepTitle}>Puntuar receta</Text>
+            </View>
+            <Text style={recipeStyle.stepTitle}>Comparte</Text>
+          </View>
           <View style={recipeStyle.commentBoxView}>
+
             <Text style={recipeStyle.stepTitle}>Comentarios</Text>
             <View>
               {this.state.comments.map((comment, i) => (
@@ -207,42 +228,48 @@ class RecipeContainer extends BaseComponent {
                 </View>
               ))}
             </View>
+
+            { (this.props.dataUser ?? null)
+              ? (
+                <>
+                  <Text style={recipeStyle.addCommentText}>Escribe aquí para añadir un comentario</Text>
+                  <TextInput
+                    ref={this.inputRef}
+                    style={recipeStyle.input}
+                    multiline
+                    numberOfLines={4}
+                    placeholder="Añade un comentario"
+                    onChangeText={(input) => this.setState({ textComment: input })}
+                  />
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    style={recipeStyle.commentButton}
+                    onPress={() => this.postComment()}
+                  >
+                    <Text style={recipeStyle.commentButtonText}>
+                      {' '}
+                      ¡He dicho!
+                      {' '}
+                    </Text>
+                  </TouchableOpacity>
+
+                </>
+
+              )
+              : (
+                <Text style={recipeStyle.loginMessage}>
+                  Inicia sesión o registrate para poder dejar un comentario!
+                </Text>
+              )}
           </View>
 
-          { (this.props.dataUser ?? null)
-            ? (
-              <>
-                <Text style={recipeStyle.addCommentText}>Escribe aquí para añadir un comentario</Text>
-                <TextInput
-                  ref={this.inputRef}
-                  style={recipeStyle.input}
-                  multiline
-                  numberOfLines={4}
-                  placeholder="Añade un comentario"
-                  onChangeText={(input) => this.setState({ textComment: input })}
-                />
-                <TouchableOpacity
-                  activeOpacity={0.8}
-                  style={recipeStyle.commentButton}
-                  onPress={() => this.postComment()}
-                >
-                  <Text style={recipeStyle.commentButtonText}>
-                    {' '}
-                    ¡He dicho!
-                    {' '}
-                  </Text>
-                </TouchableOpacity>
-
-              </>
-
-            )
-            : (
-              <Text style={recipeStyle.loginMessage}>
-                Inicia sesión o registrate para poder dejar un comentario!
-              </Text>
-            )}
-
         </ScrollView>
+        <RateModal
+          isVisible={this.state.modalVisible}
+          onClose={() => this.setState({ modalVisible: false })}
+          handleChange={this.handleChange}
+          recipeId={this.props.id}
+        />
       </SafeAreaView>
     );
   }
