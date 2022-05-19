@@ -32,7 +32,6 @@ import ProfileContainer from 'modules/profile/ProfileContainer';
 // Auth Containers
 import RegisterContainer from 'modules/auth/register/RegisterContainer';
 import LoginContainer from '../modules/auth/login/LoginContainer';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 class RouterContainer extends BaseComponent {
   render() {

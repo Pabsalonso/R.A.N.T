@@ -42,8 +42,4 @@ const style = StyleSheet.create({
     height: 60,
     paddingHorizontal: 20,
   },
-  leftButton: {
-  },
-  rightButton: {
-  },
 });
