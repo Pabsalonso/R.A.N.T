@@ -129,4 +129,13 @@ export const recipeStyle = StyleSheet.create({
     fontSize: 18,
     padding: 10,
   },
+  rateButton: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 10,
+    borderWidth: 1,
+    borderColor: 'grey',
+    backgroundColor: '#ffe875',
+  },
 });

@@ -11,12 +11,13 @@ export const getRecipes = async () => (
     .catch((error) => console.log(error)) // to catch the errors if any
 );
 
-export const getUserRecipes = async (userId) => (
+export const getUserRecipes = async (userId, userToken) => (
   fetch('http://192.168.1.143:8000/api/user/recipes', {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
+      'Authorization': `Bearer ${userToken}`,
     },
     body: JSON.stringify({
       userId,
@@ -110,12 +111,13 @@ export const newRecipe = async (userId, userToken, values) => (
     .catch((error) => error) // to catch the errors if any;
 );
 
-export const toggleFavourite = async (userId, recipeId) => (
+export const toggleFavourite = async (userId, recipeId, userToken) => (
   fetch(`http://192.168.1.143:8000/api/recipe/favourite/${recipeId}`, {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
+      'Authorization': `Bearer ${userToken}`,
     },
     body: JSON.stringify({
       userId,
@@ -125,12 +127,13 @@ export const toggleFavourite = async (userId, recipeId) => (
     .catch((error) => console.log(error))
 );
 
-export const checkFavourite = async (userId, recipeId) => (
+export const checkFavourite = async (userId, recipeId, userToken) => (
   fetch(`http://192.168.1.143:8000/api/recipe/favouriteCheck/${recipeId}`, {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
+      'Authorization': `Bearer ${userToken}`,
     },
     body: JSON.stringify({
       userId,

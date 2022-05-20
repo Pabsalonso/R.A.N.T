@@ -75,7 +75,6 @@ export default function NewRecipeStep2({ nextStep, prevStep, handleChange, value
           ref={addInputRef}
           placeholder="Añadir ingrediente"
           onChangeText={(text) => { ingredientBuffer = text; }}
-          placeholderTextColor="black"
           style={newRecipeStep2.addIngredient}
           onSubmitEditing={addIngredient}
         />

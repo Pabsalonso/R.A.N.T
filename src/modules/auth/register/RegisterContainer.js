@@ -62,6 +62,8 @@ class RegisterContainer extends BaseComponent {
      if (!FormValidator.emailValidator(email)
        || !FormValidator.isValidPassword(password)) {
        Alert.alert('Error', 'Email o contraseña no cumple con requisitos');
+     } else if (!FormValidator.isValidPasswordCoincidence(password, confirmPassword)) {
+       Alert.alert('Error', 'La confirmación de contraseña no es correcta');
      } else {
        this.setState({ spinner: true });
        register(email, password, confirmPassword, profile, name).then((result) => {

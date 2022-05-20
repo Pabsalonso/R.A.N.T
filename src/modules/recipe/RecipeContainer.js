@@ -1,6 +1,6 @@
 /* eslint-disable global-require */
 import React from 'react';
-import { SafeAreaView, View, Text, Image, ImageBackground, Alert } from 'react-native';
+import { SafeAreaView, View, Text, Image, ImageBackground, Alert, Share } from 'react-native';
 import { ScrollView, TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Rating } from 'react-native-ratings';
@@ -28,7 +28,7 @@ class RecipeContainer extends BaseComponent {
 
   componentDidMount() {
     if (this.props.dataUser !== null) {
-      checkFavourite(this.props.dataUser.id, this.props.id)
+      checkFavourite(this.props.dataUser.id, this.props.id, this.props.dataUser.accessToken)
         .then((response) => this.setState({ favourite: response }));
     }
     getComments(this.props.id)
@@ -65,7 +65,7 @@ class RecipeContainer extends BaseComponent {
   }
 
   toggleFavourite = () => {
-    toggleFavourite(this.props.dataUser.id, this.props.id)
+    toggleFavourite(this.props.dataUser.id, this.props.id, this.props.dataUser.accessToken)
       .then((response) => {
         this.setState({ favourite: response });
       });
@@ -95,6 +95,18 @@ class RecipeContainer extends BaseComponent {
     }
     return null;
   }
+
+  shareData = async () => {
+    try {
+      await Share.share({
+        message:
+              `Me ha en cantado esta receta de ${this.props.title}.
+              ¡Descargate las recetas de la abuela para verla!`,
+      });
+    } catch (error) {
+      alert(error.message);
+    }
+  };
 
   render() {
     const recipe = this.props;
@@ -210,12 +222,21 @@ class RecipeContainer extends BaseComponent {
           >
             <Text style={[recipeStyle.text, recipeStyle.recipeTitles]}>Comparte y Opina</Text>
           </ImageBackground>
-          <View>
-            <View>
-              <Icon name="stars" size={30} onPress={() => this.setState({ modalVisible: true })} />
+          <View style={recipeStyle.recipeCardInfo}>
+            <TouchableOpacity
+              style={recipeStyle.rateButton}
+              onPress={() => this.setState({ modalVisible: true })}
+            >
+              <Icon name="stars" size={30} />
               <Text style={recipeStyle.stepTitle}>Puntuar receta</Text>
-            </View>
-            <Text style={recipeStyle.stepTitle}>Comparte</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={recipeStyle.rateButton}
+              onPress={this.shareData}
+            >
+              <Icon name="share" size={30} />
+              <Text style={recipeStyle.stepTitle}>Comparte</Text>
+            </TouchableOpacity>
           </View>
           <View style={recipeStyle.commentBoxView}>
 

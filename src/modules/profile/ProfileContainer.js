@@ -105,13 +105,13 @@ class ProfileContainer extends BaseComponent {
              >
                <Icon name="add-a-photo" size={20} />
 
-               <Text>{' '}{values.picture === '' ? 'Añadir foto de Perfil' : 'Editar foto de Perfil'}{' '}</Text>
+               <Text>{' '}{values.picture === null ? 'Añadir foto de Perfil' : 'Editar foto de Perfil'}{' '}</Text>
              </TouchableOpacity>
              { ((values.picture ?? null) && (values.picture.length !== 0)) && (
                <TouchableOpacity
                  activeOpacity={0.8}
                  style={registerStyle.removeImgButton}
-                 onPress={() => this.setState({ picture: '' })}
+                 onPress={() => this.setState({ picture: null })}
                >
                  <Icon name="delete" color="white" size={20} />
 

@@ -28,7 +28,7 @@ class UserRecipesContainer extends BaseComponent {
 
   fetchAPIData = () => {
     this.setState({ refreshing: true });
-    getUserRecipes(this.props.dataUser.id).then((result) => {
+    getUserRecipes(this.props.dataUser.id, this.props.dataUser.accessToken).then((result) => {
       this.setState({
         recipes: result,
         refreshing: false,
