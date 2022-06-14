@@ -58,9 +58,6 @@ class RouterContainer extends BaseComponent {
                   title={strings('title.home')}
                   component={HomeContainer}
                   hideNavBar
-                  // renderLeftButton={drawerIcon}
-                  // titleStyle={styles.titleStyle}
-                  // navigationBarStyle={styles.navBarColor}
                 />
               </Drawer>
               <Scene key={Routing.userRecipes} component={UserRecipesContainer} navigationBarStyle={styles.navBarColor} />

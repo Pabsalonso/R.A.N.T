@@ -28,7 +28,7 @@ class UserRecipesContainer extends BaseComponent {
 
   fetchAPIData = () => {
     this.setState({ refreshing: true });
-    getUserRecipes(this.props.dataUser.id, this.props.dataUser.accessToken).then((result) => {
+    getUserRecipes(this.props.dataUser.id, this.props.accessToken).then((result) => {
       this.setState({
         recipes: result,
         refreshing: false,
@@ -56,7 +56,7 @@ class UserRecipesContainer extends BaseComponent {
         {
           text: 'Borrar',
           onPress: () => {
-            deleteRecipe(id, this.state.accessToken).then(() => {
+            deleteRecipe(id, this.props.accessToken).then(() => {
               const filteredData = this.state.recipes.filter((item) => item.id !== id);
               this.setState({ recipes: filteredData });
             });

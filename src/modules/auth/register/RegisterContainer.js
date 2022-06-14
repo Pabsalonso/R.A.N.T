@@ -67,7 +67,7 @@ class RegisterContainer extends BaseComponent {
      } else {
        this.setState({ spinner: true });
        register(email, password, confirmPassword, profile, name).then((result) => {
-         if (result.code === 401) {
+         if (result.code === 401 || result.status === 500) {
            Alert.alert('Error', 'El correo ya se encuentra en uso');
            this.setState({ spinner: false });
          } else {

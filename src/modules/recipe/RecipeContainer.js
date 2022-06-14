@@ -28,7 +28,7 @@ class RecipeContainer extends BaseComponent {
 
   componentDidMount() {
     if (this.props.dataUser !== null) {
-      checkFavourite(this.props.dataUser.id, this.props.id, this.props.dataUser.accessToken)
+      checkFavourite(this.props.dataUser.id, this.props.id, this.props.accessToken)
         .then((response) => this.setState({ favourite: response }));
     }
     getComments(this.props.id)
@@ -65,7 +65,7 @@ class RecipeContainer extends BaseComponent {
   }
 
   toggleFavourite = () => {
-    toggleFavourite(this.props.dataUser.id, this.props.id, this.props.dataUser.accessToken)
+    toggleFavourite(this.props.dataUser.id, this.props.id, this.props.accessToken)
       .then((response) => {
         this.setState({ favourite: response });
       });
@@ -298,8 +298,10 @@ class RecipeContainer extends BaseComponent {
 
 const mapStateToProps = ({ UserReducer }) => {
   const { dataUser } = UserReducer;
+  const { accessToken } = UserReducer;
   return {
     dataUser,
+    accessToken,
   };
 };
 
